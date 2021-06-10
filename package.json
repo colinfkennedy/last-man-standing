@@ -1,6 +1,6 @@
 {
   "name": "last-man-standing",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "description": "Small description for last-man-standing goes here",
   "repository": "",
@@ -36,6 +36,7 @@
     "ember-cli-dependency-checker": "^3.2.0",
     "ember-cli-htmlbars": "^5.7.1",
     "ember-cli-inject-live-reload": "^2.0.2",
+    "ember-cli-postcss": "^7.0.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.1",
     "ember-data": "~3.26.0",
@@ -58,12 +59,18 @@
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
     "qunit": "^2.14.1",
-    "qunit-dom": "^1.6.0"
+    "qunit-dom": "^1.6.0",
+    "tailwindcss": "^2.1.4"
   },
   "engines": {
     "node": "10.* || >= 12"
   },
   "ember": {
     "edition": "octane"
+  },
+  "dependencies": {
+    "autoprefixer": "^10.2.6",
+    "postcss": "^8.3.1",
+    "postcss-import": "^14.0.2"
   }
 }

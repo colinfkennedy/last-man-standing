@@ -1,0 +1,11 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.max-w-12 {
+  max-width: 3rem;
+}
+
+.fit-content {
+  width: fit-content;
+}
