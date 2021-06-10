@@ -39,6 +39,7 @@
     "ember-cli-postcss": "^7.0.1",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.1",
+    "ember-concurrency": "^2.1.0",
     "ember-data": "~3.26.0",
     "ember-export-application-global": "^2.0.1",
     "ember-fetch": "^8.0.4",
@@ -70,6 +71,7 @@
   },
   "dependencies": {
     "autoprefixer": "^10.2.6",
+    "parse": "^3.2.0",
     "postcss": "^8.3.1",
     "postcss-import": "^14.0.2"
   }
