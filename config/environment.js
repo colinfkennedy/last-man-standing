@@ -4,7 +4,7 @@ module.exports = function (environment) {
   let ENV = {
     modulePrefix: 'last-man-standing',
     environment,
-    rootURL: '/',
+    rootURL: 'last-man-standing/',
     locationType: 'auto',
     EmberENV: {
       FEATURES: {

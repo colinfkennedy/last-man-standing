@@ -1,3 +1,6 @@
 <h1>LAST MAN STANDING</h1>
+{{#each @clubs as |club|}}
+  <Club @club={{club}}/>
+{{/each}}
 
 <button type="button" {{on 'click' this.addManUnited}}>Add Man United</button>

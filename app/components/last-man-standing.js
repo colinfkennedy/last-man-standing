@@ -3,7 +3,6 @@ import { action } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default class LastManStandingComponent extends Component {
-
   @task
   *saveManUnited() {
     const manUnitedClub = new Parse.Object('Club');
