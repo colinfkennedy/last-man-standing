@@ -12,7 +12,7 @@ export const data = [
     logo: 'brentford',
   },
   {
-    name: 'Brighton & Hove Albion',
+    name: 'Brighton and Hove Albion',
     logo: 'brighton',
   },
   {
@@ -52,7 +52,7 @@ export const data = [
     logo: 'manchester-united',
   },
   {
-    name: 'Newcastle',
+    name: 'Newcastle United',
     logo: 'newcastle',
   },
   {
