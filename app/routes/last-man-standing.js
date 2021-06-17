@@ -26,12 +26,14 @@ export default class LastManStandingRoute extends Route {
 
   parseRawFixtures(clubs) {
     rawFixtures.pages.forEach((page) => {
-      console.log('page', page);
       page.content.forEach((fixture) => {
         let gameweekId = fixture.gameweek.gameweek;
         let gameweek = this.store.peekRecord('gameweek', gameweekId);
         if (gameweek == null) {
-          gameweek = this.store.createRecord('gameweek', { id: gameweekId, label: gameweekId });
+          gameweek = this.store.createRecord('gameweek', {
+            id: gameweekId,
+            label: gameweekId,
+          });
         }
 
         let homeTeamName = fixture.teams[0].team.name;
