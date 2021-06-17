@@ -1,6 +1,5 @@
-<h1>LAST MAN STANDING</h1>
-{{#each @clubs as |club|}}
-  <Club @club={{club}}/>
-{{/each}}
-
-<button type="button" {{on 'click' this.addManUnited}}>Add Man United</button>
+<div class="flex flex-col space-y-2 pt-4">
+  {{#each @gameweeks as |gameweek|}}
+    <Gameweek @gameweek={{gameweek}} />
+  {{/each}}
+</div>

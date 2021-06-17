@@ -31,7 +31,7 @@ export default class LastManStandingRoute extends Route {
         let gameweekId = fixture.gameweek.gameweek;
         let gameweek = this.store.peekRecord('gameweek', gameweekId);
         if (gameweek == null) {
-          gameweek = this.store.createRecord('gameweek', { id: gameweekId });
+          gameweek = this.store.createRecord('gameweek', { id: gameweekId, label: gameweekId });
         }
 
         let homeTeamName = fixture.teams[0].team.name;
@@ -40,15 +40,11 @@ export default class LastManStandingRoute extends Route {
         let homeTeam = clubs.findBy('name', homeTeamName);
         let awayTeam = clubs.findBy('name', awayTeamName);
 
-        let fixtureRecord = this.store.createRecord('fixture', {
+        this.store.createRecord('fixture', {
           gameweek,
           homeTeam,
           awayTeam,
         });
-
-        console.log(
-          `${fixtureRecord.get('homeTeam.name')} v ${fixtureRecord.get('awayTeam.name')} - Gameweek ${fixtureRecord.gameweek.get('id')}`
-        );
       });
     });
   }

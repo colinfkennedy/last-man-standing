@@ -1,6 +1,6 @@
 import Model, { attr, hasMany } from '@ember-data/model';
 
 export default class GameweekModel extends Model {
-  @attr('number') number;
+  @attr('number') label;
   @hasMany('fixture') fixtures;
 }
