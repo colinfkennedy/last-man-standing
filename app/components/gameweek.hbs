@@ -5,6 +5,9 @@
     </div>
 
     <div class="flex flex-col items-center space-y-4 p-4">
+      {{#each @gameweek.selections as |selection|}}
+        <Gameweek::Selection @selection={{selection}} />
+      {{/each}}
     </div>
 
     <div class="text-center text-xl lg:text-2xl font-thin text-gray-300">
@@ -13,7 +16,7 @@
 
     <div class="flex flex-col items-center space-y-4 p-4">
       {{#each @gameweek.fixtures as |fixture|}}
-        <Fixture @fixture={{fixture}} />
+        <Gameweek::Fixture @fixture={{fixture}} />
       {{/each}}
     </div>
   </div>

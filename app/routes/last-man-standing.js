@@ -1,6 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { data as clubs } from 'last-man-standing/data/clubs';
+import { data as babbers } from 'last-man-standing/data/babbers';
 import { data as rawFixtures } from 'last-man-standing/data/fixtures';
 
 export default class LastManStandingRoute extends Route {
@@ -18,9 +19,25 @@ export default class LastManStandingRoute extends Route {
 
     this.parseRawFixtures(clubsRecords);
 
+    babbers.forEach((babber) => {
+      let babberRecord = this.store.createRecord('babber', {
+        name: babber.name,
+        photo: babber.photo,
+      });
+      let clubRecord = clubsRecords.findBy('name', 'Manchester United');
+
+      this.store.createRecord('selection', {
+        babber: babberRecord,
+        club: clubRecord,
+        gameweek: this.store.peekRecord('gameweek', 1),
+      });
+    });
+
     return {
       clubs: clubsRecords,
       gameweeks: this.store.peekAll('gameweek'),
+      selections: this.store.peekAll('selection'),
+      babbers: this.store.peekAll('babbers'),
     };
   }
 
