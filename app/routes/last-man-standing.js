@@ -37,7 +37,7 @@ export default class LastManStandingRoute extends Route {
       clubs: clubsRecords,
       gameweeks: this.store.peekAll('gameweek'),
       selections: this.store.peekAll('selection'),
-      babbers: this.store.peekAll('babbers'),
+      babbers: this.store.peekAll('babber'),
     };
   }
 

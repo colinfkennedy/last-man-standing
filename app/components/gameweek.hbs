@@ -5,8 +5,8 @@
     </div>
 
     <div class="flex flex-col items-center space-y-4 p-4">
-      {{#each @gameweek.selections as |selection|}}
-        <Gameweek::Selection @selection={{selection}} />
+      {{#each @babbers as |babber|}}
+        <Gameweek::Selection @babber={{babber}} @gameweek={{@gameweek}} />
       {{/each}}
     </div>
 
