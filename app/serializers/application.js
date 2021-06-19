@@ -1,20 +1,20 @@
-import JSONAPISerializer from '@ember-data/serializer/json-api';
+import JSONSerializer from '@ember-data/serializer/json';
 
-export default class ApplicationSerializer extends JSONAPISerializer {
+export default class ApplicationSerializer extends JSONSerializer {
   primaryKey = 'objectId';
 
   normalizeResponse(store, primaryModelClass, payload, id, requestType) {
-    payload.data = payload.results;
-    delete payload.results;
-    payload.data.forEach((model) => {
-      model['type'] = primaryModelClass.modelName;
-    });
     return super.normalizeResponse(
       store,
       primaryModelClass,
-      payload,
+      payload.results,
       id,
       requestType
     );
+  }
+
+  normalize(typeClass, hash) {
+    hash['type'] = typeClass.modelName;
+    return super.normalize(...arguments);
   }
 }
