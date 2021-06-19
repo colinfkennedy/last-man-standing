@@ -5,9 +5,9 @@
     </div>
     <button
       class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-      {{on 'click' this.createGameweek}}
+      {{on 'click' this.createGameweeks}}
     >
-      Create Gameweek
+      Create Gameweeks
     </button>
 
     <button
@@ -15,6 +15,13 @@
       {{on 'click' this.createClubs}}
     >
       Create Clubs
+    </button>
+
+    <button
+      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+      {{on 'click' this.createFixture}}
+    >
+      Create Fixture
     </button>
   </div>
 </div>

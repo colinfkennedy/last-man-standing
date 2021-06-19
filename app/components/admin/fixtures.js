@@ -8,9 +8,39 @@ export default class AdminFixturesComponent extends Component {
   @service store;
 
   @action
-  createGameweek() {
-    this.store.createRecord('gameweek', {
-      label: 1,
+  createGameweeks() {
+    this.store.findAll('clubs').then((clubs) => {
+      // this.parseRawFixtures(clubs);
+      this.createFixture(fixture, clubs);
+    });
+  }
+
+  @action
+  createFixture() {
+    this.createFixtureAsync();
+  }
+
+  async createFixtureAsync() {
+    let fixture = rawFixtures.pages[0].content[0];
+    debugger;
+    let clubs = await this.store.findAll('club');
+    let gameweekId = fixture.gameweek.gameweek;
+
+    let gameweek = await this.store.createRecord('gameweek', {
+      label: gameweekId,
+    }).save();
+
+
+    let homeTeamName = fixture.teams[0].team.name;
+    let awayTeamName = fixture.teams[1].team.name;
+
+    let homeTeam = clubs.findBy('name', homeTeamName);
+    let awayTeam = clubs.findBy('name', awayTeamName);
+
+    await this.store.createRecord('fixture', {
+      gameweek,
+      homeTeam,
+      awayTeam,
     }).save();
   }
 
@@ -31,7 +61,6 @@ export default class AdminFixturesComponent extends Component {
         let gameweek = this.store.peekRecord('gameweek', gameweekId);
         if (gameweek == null) {
           gameweek = this.store.createRecord('gameweek', {
-            id: gameweekId,
             label: gameweekId,
           });
         }
