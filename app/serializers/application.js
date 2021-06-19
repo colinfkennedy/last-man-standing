@@ -3,11 +3,21 @@ import JSONSerializer from '@ember-data/serializer/json';
 export default class ApplicationSerializer extends JSONSerializer {
   primaryKey = 'objectId';
 
-  normalizeResponse(store, primaryModelClass, payload, id, requestType) {
-    return super.normalizeResponse(
+  normalizeArrayResponse(store, primaryModelClass, payload, id, requestType) {
+    return super.normalizeArrayResponse(
       store,
       primaryModelClass,
       payload.results,
+      id,
+      requestType
+    );
+  }
+
+  normalizeCreateRecordResponse(store, primaryModelClass, payload, id, requestType) {
+    return super.normalizeCreateRecordResponse(
+      store,
+      primaryModelClass,
+      payload,
       id,
       requestType
     );

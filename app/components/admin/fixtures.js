@@ -1,32 +1,27 @@
-import Route from '@ember/routing/route';
-import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service'
+import { action } from '@ember/object';
 import { data as rawFixtures } from 'last-man-standing/data/fixtures';
+import { data as rawClubs } from 'last-man-standing/data/clubs';
 
-export default class LastManStandingRoute extends Route {
+export default class AdminFixturesComponent extends Component {
   @service store;
 
-  async model() {
-    let clubs = await this.store.findAll('club');
-    let babbers = await this.store.findAll('babber');
+  @action
+  createGameweek() {
+    this.store.createRecord('gameweek', {
+      label: 1,
+    }).save();
+  }
 
-    this.parseRawFixtures(clubs);
-
-    babbers.forEach((babber) => {
-      let clubRecord = clubs.findBy('name', 'Manchester United');
-
-      this.store.createRecord('selection', {
-        babber: babber,
-        club: clubRecord,
-        gameweek: this.store.peekRecord('gameweek', 1),
-      });
-    });
-
-    return {
-      clubs: clubs,
-      gameweeks: this.store.peekAll('gameweek'),
-      selections: this.store.peekAll('selection'),
-      babbers: babbers,
-    };
+  @action
+  createClubs() {
+    rawClubs.forEach((club) => {
+      this.store.createRecord('club', {
+        name: club.name,
+        logo: club.logo,
+      }).save();
+    })
   }
 
   parseRawFixtures(clubs) {
