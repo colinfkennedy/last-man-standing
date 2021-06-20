@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service'
 import { action } from '@ember/object';
 import { data as rawFixtures } from 'last-man-standing/data/fixtures';
 import { data as rawClubs } from 'last-man-standing/data/clubs';
+import { task } from 'ember-concurrency';
 
 export default class AdminFixturesComponent extends Component {
   @service store;
@@ -17,19 +18,19 @@ export default class AdminFixturesComponent extends Component {
 
   @action
   createFixture() {
-    this.createFixtureAsync();
+    this.createFixtureAsync.perform();
   }
 
-  async createFixtureAsync() {
+  @task
+  *createFixtureAsync() {
     let fixture = rawFixtures.pages[0].content[0];
-    debugger;
-    let clubs = await this.store.findAll('club');
+    let clubs = yield this.store.findAll('club');
     let gameweekId = fixture.gameweek.gameweek;
 
-    let gameweek = await this.store.createRecord('gameweek', {
-      label: gameweekId,
-    }).save();
+    let gameweek = this.store.createRecord('gameweek');
+    gameweek.label = gameweekId;
 
+    yield gameweek.save();
 
     let homeTeamName = fixture.teams[0].team.name;
     let awayTeamName = fixture.teams[1].team.name;
@@ -37,11 +38,13 @@ export default class AdminFixturesComponent extends Component {
     let homeTeam = clubs.findBy('name', homeTeamName);
     let awayTeam = clubs.findBy('name', awayTeamName);
 
-    await this.store.createRecord('fixture', {
-      gameweek,
-      homeTeam,
-      awayTeam,
-    }).save();
+    let fixtureRecord = this.store.createRecord('fixture');
+    fixtureRecord.gameweek = gameweek;
+    fixtureRecord.homeTeam = homeTeam;
+    fixtureRecord.awayTeam = awayTeam;
+
+    yield fixtureRecord.save();
+    yield gameweek.save();
   }
 
   @action
