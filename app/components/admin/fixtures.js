@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service'
+import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { data as rawFixtures } from 'last-man-standing/data/fixtures';
 import { data as rawClubs } from 'last-man-standing/data/clubs';
@@ -12,7 +12,6 @@ export default class AdminFixturesComponent extends Component {
   createGameweeks() {
     this.store.findAll('clubs').then((clubs) => {
       // this.parseRawFixtures(clubs);
-      this.createFixture(fixture, clubs);
     });
   }
 
@@ -50,11 +49,13 @@ export default class AdminFixturesComponent extends Component {
   @action
   createClubs() {
     rawClubs.forEach((club) => {
-      this.store.createRecord('club', {
-        name: club.name,
-        logo: club.logo,
-      }).save();
-    })
+      this.store
+        .createRecord('club', {
+          name: club.name,
+          logo: club.logo,
+        })
+        .save();
+    });
   }
 
   parseRawFixtures(clubs) {

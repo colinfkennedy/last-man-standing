@@ -23,5 +23,9 @@
     >
       Create Fixture
     </button>
+
+    {{#each @gameweeks as |gameweek|}}
+      <Gameweek::FixtureList @gameweek={{gameweek}}/>
+    {{/each}}
   </div>
 </div>
