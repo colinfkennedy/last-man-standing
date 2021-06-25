@@ -10,9 +10,7 @@ export default class AdminFixturesComponent extends Component {
 
   @action
   createGameweeks() {
-    this.store.findAll('clubs').then((clubs) => {
-      // this.parseRawFixtures(clubs);
-    });
+    this.parseRawFixtures().perform();
   }
 
   @action
@@ -37,10 +35,13 @@ export default class AdminFixturesComponent extends Component {
     let homeTeam = clubs.findBy('name', homeTeamName);
     let awayTeam = clubs.findBy('name', awayTeamName);
 
+    let kickoff = new Date(fixture.kickoff.millis);
+
     let fixtureRecord = this.store.createRecord('fixture');
     fixtureRecord.gameweek = gameweek;
     fixtureRecord.homeTeam = homeTeam;
     fixtureRecord.awayTeam = awayTeam;
+    fixtureRecord.kickoff = kickoff;
 
     yield fixtureRecord.save();
     yield gameweek.save();
@@ -58,29 +59,44 @@ export default class AdminFixturesComponent extends Component {
     });
   }
 
-  parseRawFixtures(clubs) {
+  @task
+  *parseRawFixtures() {
     rawFixtures.pages.forEach((page) => {
       page.content.forEach((fixture) => {
-        let gameweekId = fixture.gameweek.gameweek;
-        let gameweek = this.store.peekRecord('gameweek', gameweekId);
-        if (gameweek == null) {
-          gameweek = this.store.createRecord('gameweek', {
-            label: gameweekId,
-          });
-        }
-
-        let homeTeamName = fixture.teams[0].team.name;
-        let awayTeamName = fixture.teams[1].team.name;
-
-        let homeTeam = clubs.findBy('name', homeTeamName);
-        let awayTeam = clubs.findBy('name', awayTeamName);
-
-        this.store.createRecord('fixture', {
-          gameweek,
-          homeTeam,
-          awayTeam,
-        });
+        this.createFixtureAndGameweek.perform(fixture);
       });
     });
+  }
+
+  @task
+  *createFixtureAndGameweek(fixture) {
+    let gameweeks = this.store.peekAll('gameweek');
+    let clubs = this.store.peekAll('club');
+
+    let gameweekId = fixture.gameweek.gameweek;
+    let gameweek = gameweeks.findBy('label', gameweekId);
+
+    if (gameweek == null) {
+      gameweek = this.store.createRecord('gameweek');
+      gameweek.label = gameweekId;
+
+      yield gameweek.save();
+    }
+
+    let homeTeamName = fixture.teams[0].team.name;
+    let awayTeamName = fixture.teams[1].team.name;
+
+    let homeTeam = clubs.findBy('name', homeTeamName);
+    let awayTeam = clubs.findBy('name', awayTeamName);
+
+    let kickoff = new Date(fixture.kickoff.millis);
+
+    let fixtureRecord = this.store.createRecord('fixture');
+    fixtureRecord.gameweek = gameweek;
+    fixtureRecord.homeTeam = homeTeam;
+    fixtureRecord.awayTeam = awayTeam;
+    fixtureRecord.kickoff = kickoff.toISOString();
+
+    yield fixtureRecord.save();
   }
 }

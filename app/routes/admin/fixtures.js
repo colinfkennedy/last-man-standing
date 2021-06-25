@@ -7,6 +7,8 @@ export default class AdminFixturesRoute extends Route {
   model() {
     return {
       gameweeks: this.store.findAll('gameweek'),
+      fixtures: this.store.findAll('fixture'),
+      clubs: this.store.findAll('club'),
     };
   }
 }

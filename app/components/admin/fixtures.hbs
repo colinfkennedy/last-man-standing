@@ -25,6 +25,9 @@
     </button>
 
     {{#each @gameweeks as |gameweek|}}
+      <div class="text-center text-xl lg:text-2xl font-thin text-gray-300">
+        Gameweek {{gameweek.label}}
+      </div>
       <Gameweek::FixtureList @gameweek={{gameweek}}/>
     {{/each}}
   </div>
