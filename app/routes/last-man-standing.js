@@ -21,12 +21,27 @@ export default class LastManStandingRoute extends Route {
       });
     });
 
+    this.addDummyFixtureResults();
+
     return {
       clubs: clubs,
       gameweeks: this.store.peekAll('gameweek'),
       selections: this.store.peekAll('selection'),
       babbers: babbers,
     };
+  }
+
+  addDummyFixtureResults() {
+    let gameweekOneFixtures = this.store.peekRecord('gameweek', 1).fixtures;
+
+    gameweekOneFixtures.objectAt(0).homeScore = 3;
+    gameweekOneFixtures.objectAt(0).awayScore = 0;
+
+    gameweekOneFixtures.objectAt(1).homeScore = 1;
+    gameweekOneFixtures.objectAt(1).awayScore = 2;
+
+    gameweekOneFixtures.objectAt(2).homeScore = 2;
+    gameweekOneFixtures.objectAt(2).awayScore = 2;
   }
 
   parseRawFixtures(clubs) {

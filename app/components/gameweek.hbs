@@ -10,6 +10,16 @@
       {{/each}}
     </div>
 
+    <div class="text-center text-xl lg:text-2xl font-thin">
+      LOSERS
+    </div>
+
+    <div class="flex flex-col items-center space-y-4 p-4">
+      {{#each @gameweek.losingTeams as |club|}}
+        <Club @club={{club}} class="text-left -ml-2" />
+      {{/each}}
+    </div>
+
     <Gameweek::FixtureList @gameweek={{@gameweek}}/>
   </div>
 </div>
