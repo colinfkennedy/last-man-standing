@@ -22,6 +22,7 @@ module.exports = {
         euros: '#0184A4',
         charcoalRed: '#2b2525',
         charcoalGreen: '#252b26',
+        premPurple: '#37003c',
       },
     },
     screens: {

@@ -9,3 +9,25 @@
 .fit-content {
   width: fit-content;
 }
+
+.fixedContainer {
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.logo {
+  position: absolute;
+  z-index: 50;
+  width: 50px;
+}
+
+.logoBackground {
+  background: #fff;
+  border-top-right-radius: 46%;
+  border-bottom-right-radius: 70%;
+  width: 64px;
+  height: 72px;
+  position: absolute;
+  z-index: 49;
+}
