@@ -6,6 +6,10 @@ export default class GameweekSelectionComponent extends Component {
     return isPresent(this.selection);
   }
 
+  get noSelection() {
+    return !this.hasSelection;
+  }
+
   get selection() {
     return this.args.gameweek.selections.findBy(
       'babber.name',
