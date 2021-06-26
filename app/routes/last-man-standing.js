@@ -1,6 +1,6 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { data as rawFixtures } from 'last-man-standing/data/fixtures';
+import rawFixtures from 'last-man-standing/data/fixtures';
 
 export default class LastManStandingRoute extends Route {
   @service store;
@@ -47,10 +47,13 @@ export default class LastManStandingRoute extends Route {
         let homeTeam = clubs.findBy('name', homeTeamName);
         let awayTeam = clubs.findBy('name', awayTeamName);
 
+        let kickoff = new Date(fixture.kickoff.millis);
+
         this.store.createRecord('fixture', {
           gameweek,
           homeTeam,
           awayTeam,
+          kickoff,
         });
       });
     });
