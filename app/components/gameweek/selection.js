@@ -13,7 +13,7 @@ export default class GameweekSelectionComponent extends Component {
   get selection() {
     return this.args.gameweek.selections.findBy(
       'babber.name',
-      this.args.babber.name
+      this.args.babber.get('name')
     );
   }
 
