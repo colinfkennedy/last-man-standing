@@ -45,6 +45,13 @@ export default class LastManStandingRoute extends Route {
     selectionRecord2.club = arsenal;
     selectionRecord2.gameweek = gameweek;
 
+    let gameweek2 = this.store.peekRecord('gameweek', 2);
+    let astonVilla = clubs.findBy('name', 'Aston Villa');
+    let selectionRecord22 = this.store.createRecord('selection');
+    selectionRecord22.babber = babber2;
+    selectionRecord22.club = astonVilla;
+    selectionRecord22.gameweek = gameweek2;
+
     let babber3 = babbers.objectAt(2);
     let selectionRecord3 = this.store.createRecord('selection');
     selectionRecord3.babber = babber3;

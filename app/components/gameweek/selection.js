@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { isPresent } from '@ember/utils';
+import { cached } from '@glimmer/tracking';
 
 export default class GameweekSelectionComponent extends Component {
   get hasSelection() {
@@ -10,14 +11,14 @@ export default class GameweekSelectionComponent extends Component {
     return !this.hasSelection;
   }
 
+  @cached
   get selection() {
-    return this.args.gameweek.selections.findBy(
-      'babber.name',
-      this.args.babber.get('name')
-    );
+    return this.args.babber
+      .get('selections')
+      .findBy('gameweek.id', this.args.gameweek.get('id'));
   }
 
   get clubSelection() {
-    return this.selection?.club;
+    return this.selection?.club || this.args.babber.get('defaultSelection');
   }
 }
