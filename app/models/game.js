@@ -11,4 +11,11 @@ export default class GameModel extends Model {
   get gameweeks() {
     return this.store.findAll('gameweek');
   }
+
+  get currentGameweek() {
+    let now = new Date();
+    return this.store.peekAll('gameweek').find((gameweek) => {
+      return now.setHours(1) < gameweek.end;
+    });
+  }
 }

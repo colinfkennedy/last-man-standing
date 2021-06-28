@@ -1,7 +1,7 @@
 <div class="flex flex-col space-y-2 pt-4">
   <select name="gameweek-selector" class="form-select min-w-max w-1/5 rounded-md ml-4 mr-4 border border-premPurple" {{on "change" this.setGameweek}}>
     {{#each @gameweeks as |gameweek|}}
-      <option value={{gameweek.id}}>Gameweek {{gameweek.label}}</option>
+      <option value={{gameweek.id}} selected={{if (eq gameweek this.currentGameweek) 'selected'}}>Gameweek {{gameweek.label}}</option>
     {{/each}}
   </select>
   <Gameweek @gameweek={{this.currentGameweek}} @babbers={{@babbers}}/>

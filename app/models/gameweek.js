@@ -21,4 +21,14 @@ export default class GameweekModel extends Model {
       }
     });
   }
+
+  get start() {
+    return this.fixtures.map((fixture) => fixture.kickoff).sort((a, b) => b - a)
+      .lastObject;
+  }
+
+  get end() {
+    return this.fixtures.map((fixture) => fixture.kickoff).sort((a, b) => a - b)
+      .lastObject;
+  }
 }

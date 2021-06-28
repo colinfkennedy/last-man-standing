@@ -9,7 +9,10 @@ export default class LastManStandingRoute extends Route {
     let clubs = await this.store.findAll('club');
     let babbers = await this.store.findAll('babber');
 
+    let game = this.store.createRecord('game');
     this.parseRawFixtures(clubs);
+
+    game.startGameweek = this.store.peekRecord('gameweek', 1);
 
     this.addDummyFixtureResults();
 
@@ -17,6 +20,7 @@ export default class LastManStandingRoute extends Route {
 
     return {
       clubs: clubs,
+      game: game,
       gameweeks: this.store.peekAll('gameweek'),
       selections: this.store.peekAll('selection'),
       babbers: babbers,

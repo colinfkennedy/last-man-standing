@@ -49,7 +49,6 @@ export default class ApplicationSerializer extends JSONSerializer {
   }
 
   extractRelationships(modelClass, resourceHash) {
-    // debugger;
     let relationships = {};
 
     modelClass.eachRelationship((key, relationshipMeta) => {
