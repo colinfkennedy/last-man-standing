@@ -1,8 +1,8 @@
-<div class="flex flex-col flex-grow rounded-xl  w-full shadow lg:max-w-2xl border p-4 space-y-4 {{if this.noSelection 'bg-gray-100'}}">
+<div class="flex flex-col flex-grow rounded-xl  w-full shadow lg:max-w-2xl border p-4 space-y-4 {{if @selection.isAlphabetPick 'bg-gray-100'}}">
   <div class="flex flex-row items-center">
-    <Babber @babber={{@babber}}/>
-    {{#if this.clubSelection}}
-      <Club @club={{this.clubSelection}} class="text-right flex-row-reverse -mr-2" />
+    <Babber @babber={{@selection.babber}}/>
+    {{#if @selection.club}}
+      <Club @club={{@selection.club}} class="text-right flex-row-reverse -mr-2" />
     {{/if}}
   </div>
 </div>
