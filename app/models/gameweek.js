@@ -13,16 +13,14 @@ export default class GameweekModel extends Model {
     return this.fixtures.map((fixture) => fixture.losingTeam).compact();
   }
 
-  get losingSelections() {
-    return this.selectionsWithDefaults.filter((selection) => {
-      if (isPresent(selection.club)) {
-        return isPresent(
-          this.losingTeams.findBy('name', selection.get('club.name'))
-        );
-      } else {
-        return false;
-      }
-    });
+  isLosingSelection(selection) {
+    if (isPresent(selection.club)) {
+      return isPresent(
+        this.losingTeams.findBy('name', selection.get('club.name'))
+      );
+    } else {
+      return false;
+    }
   }
 
   get selectionsWithDefaults() {
@@ -33,7 +31,9 @@ export default class GameweekModel extends Model {
         'babber.name',
         babber.name
       );
-      return gameweekSelection || this.defaultSelection(babber);
+      gameweekSelection = gameweekSelection || this.defaultSelection(babber);
+      gameweekSelection.lost = this.isLosingSelection(gameweekSelection);
+      return gameweekSelection;
     });
   }
 

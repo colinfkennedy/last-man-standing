@@ -5,4 +5,5 @@ export default class SelectionModel extends Model {
   @belongsTo('babber') babber;
   @belongsTo('club') club;
   @attr('boolean', { defaultValue: false }) isAlphabetPick;
+  @attr('boolean', { defaultValue: false }) lost;
 }
