@@ -10,9 +10,7 @@ export default class LastManStandingRoute extends Route {
     let babbers = await this.store.findAll('babber');
 
     let game = this.store.createRecord('game');
-    this.parseRawFixtures(clubs);
-
-    game.startGameweek = this.store.peekRecord('gameweek', 1);
+    this.parseRawFixtures(clubs, game);
 
     this.addDummyFixtureResults();
 
@@ -106,7 +104,7 @@ export default class LastManStandingRoute extends Route {
     gameweekOneFixtures.objectAt(9).awayScore = 3;
   }
 
-  parseRawFixtures(clubs) {
+  parseRawFixtures(clubs, game) {
     rawFixtures.pages.forEach((page) => {
       page.content.forEach((fixture) => {
         let gameweekId = fixture.gameweek.gameweek;
@@ -116,6 +114,7 @@ export default class LastManStandingRoute extends Route {
             id: gameweekId,
           });
           gameweek.label = gameweekId;
+          gameweek.gameOwner = game;
         }
 
         let homeTeamName = fixture.teams[0].team.name;

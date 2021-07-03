@@ -4,5 +4,5 @@
       <option value={{gameweek.id}} selected={{if (eq gameweek this.currentGameweek) 'selected'}}>Gameweek {{gameweek.label}}</option>
     {{/each}}
   </select>
-  <Gameweek @gameweek={{this.currentGameweek}} @babbers={{@babbers}}/>
+  <Gameweek @gameweek={{this.currentGameweek}}/>
 </div>

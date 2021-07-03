@@ -1,4 +1,4 @@
-import Model, { attr, hasMany } from '@ember-data/model';
+import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import { isPresent } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import EmberObject from '@ember/object';
@@ -7,7 +7,9 @@ export default class GameweekModel extends Model {
   @attr('string') label;
   @hasMany('fixture') fixtures;
   @hasMany('selection') selections;
+  @belongsTo('game') gameOwner;
   @service store;
+  @service game;
 
   get losingTeams() {
     return this.fixtures.map((fixture) => fixture.losingTeam).compact();
@@ -23,10 +25,16 @@ export default class GameweekModel extends Model {
     }
   }
 
-  get selectionsWithDefaults() {
-    let babbers = this.store.peekAll('babber');
+  get eligibleBabbers() {
+    return this.game.babbersForGameweek(this);
+  }
 
-    return babbers.map((babber) => {
+  get losingSelections() {
+    return this.selectionsWithDefaults.filter((selection) => selection.lost);
+  }
+
+  get selectionsWithDefaults() {
+    return this.eligibleBabbers.map((babber) => {
       let gameweekSelection = this.selections.findBy(
         'babber.name',
         babber.name
