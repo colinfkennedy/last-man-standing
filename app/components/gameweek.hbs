@@ -1,5 +1,10 @@
 <div class="flex flex-col space-y-2">
   <div class="flex flex-col">
+
+    {{#if @gameweek.winner}}
+      <Gameweek::Winner @winner={{@gameweek.winner}} />
+    {{/if}}
+
     <div class="text-center text-xl lg:text-2xl font-thin">
       SELECTIONS
     </div>
@@ -10,7 +15,7 @@
       {{/each}}
     </div>
 
-    <Gameweek::FixtureList @gameweek={{@gameweek}}/>
+    <Gameweek::FixtureList @gameweek={{@gameweek}} />
   </div>
 </div>
 

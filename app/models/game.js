@@ -8,7 +8,7 @@ export default class GameModel extends Model {
   @hasMany('gameweek') gameweeks;
 
   get currentGameweek() {
-    let now = new Date();
+    let now = new Date('August 20, 2021 03:24:00');
     return this.store.peekAll('gameweek').find((gameweek) => {
       return now.setHours(1) < gameweek.end;
     });

@@ -11,6 +11,14 @@ export default class GameweekModel extends Model {
   @service store;
   @service game;
 
+  get winner() {
+    let winner;
+    if (this.winningSelections.length === 1) {
+      winner = this.winningSelections.firstObject.get('babber');
+    }
+    return winner;
+  }
+
   get losingTeams() {
     return this.fixtures.map((fixture) => fixture.losingTeam).compact();
   }
@@ -27,6 +35,10 @@ export default class GameweekModel extends Model {
 
   get eligibleBabbers() {
     return this.game.babbersForGameweek(this);
+  }
+
+  get winningSelections() {
+    return this.selectionsWithDefaults.reject((selection) => selection.lost);
   }
 
   get losingSelections() {

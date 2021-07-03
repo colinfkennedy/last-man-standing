@@ -43,13 +43,6 @@ export default class LastManStandingRoute extends Route {
     selectionRecord2.club = arsenal;
     selectionRecord2.gameweek = gameweek;
 
-    let gameweek2 = this.store.peekRecord('gameweek', 2);
-    let astonVilla = clubs.findBy('name', 'Aston Villa');
-    let selectionRecord22 = this.store.createRecord('selection');
-    selectionRecord22.babber = babber2;
-    selectionRecord22.club = astonVilla;
-    selectionRecord22.gameweek = gameweek2;
-
     let babber3 = babbers.objectAt(2);
     let selectionRecord3 = this.store.createRecord('selection');
     selectionRecord3.babber = babber3;
@@ -68,6 +61,21 @@ export default class LastManStandingRoute extends Route {
     selectionRecord5.club = chelsea;
     selectionRecord5.gameweek = gameweek;
 
+    let gameweek2 = this.store.peekRecord('gameweek', 2);
+    let liverpool = clubs.findBy('name', 'Liverpool');
+    let burnley = clubs.findBy('name', 'Burnley');
+    let joe = babbers.findBy('name', 'Joe');
+    let paddy = babbers.findBy('name', 'Paddy');
+
+    let selectionRecordGw2Joe = this.store.createRecord('selection');
+    selectionRecordGw2Joe.babber = joe;
+    selectionRecordGw2Joe.club = liverpool;
+    selectionRecordGw2Joe.gameweek = gameweek2;
+
+    let selectionRecordGw2Paddy = this.store.createRecord('selection');
+    selectionRecordGw2Paddy.babber = paddy;
+    selectionRecordGw2Paddy.club = burnley;
+    selectionRecordGw2Paddy.gameweek = gameweek2;
   }
 
   addDummyFixtureResults() {
@@ -102,6 +110,11 @@ export default class LastManStandingRoute extends Route {
 
     gameweekOneFixtures.objectAt(9).homeScore = 3;
     gameweekOneFixtures.objectAt(9).awayScore = 3;
+
+    let gameweekTwoFixtures = this.store.peekRecord('gameweek', 2).fixtures;
+
+    gameweekTwoFixtures.objectAt(0).homeScore = 1;
+    gameweekTwoFixtures.objectAt(0).awayScore = 0;
   }
 
   parseRawFixtures(clubs, game) {
