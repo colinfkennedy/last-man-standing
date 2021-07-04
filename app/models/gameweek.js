@@ -7,7 +7,7 @@ export default class GameweekModel extends Model {
   @attr('string') label;
   @hasMany('fixture') fixtures;
   @hasMany('selection') selections;
-  @belongsTo('game') gameOwner;
+  @belongsTo('game') gameRecord;
   @service store;
   @service game;
 

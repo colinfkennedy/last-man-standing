@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import { data as rawFixtures } from 'last-man-standing/data/fixtures';
+import rawFixtures from 'last-man-standing/data/fixtures';
 import { data as rawClubs } from 'last-man-standing/data/clubs';
 import { task } from 'ember-concurrency';
 
@@ -10,7 +10,7 @@ export default class AdminFixturesComponent extends Component {
 
   @action
   createGameweeks() {
-    this.parseRawFixtures().perform();
+    this.parseRawFixtures();
   }
 
   @action
@@ -59,11 +59,10 @@ export default class AdminFixturesComponent extends Component {
     });
   }
 
-  @task
-  *parseRawFixtures() {
+  parseRawFixtures() {
     rawFixtures.pages.forEach((page) => {
       page.content.forEach((fixture) => {
-        this.createFixtureAndGameweek.perform(fixture);
+        this.createGameweek.perform(fixture);
       });
     });
   }
@@ -98,5 +97,20 @@ export default class AdminFixturesComponent extends Component {
     fixtureRecord.kickoff = kickoff.toISOString();
 
     yield fixtureRecord.save();
+  }
+
+  @task
+  *createGameweek(fixture) {
+    let gameweeks = this.store.peekAll('gameweek');
+
+    let gameweekId = fixture.gameweek.gameweek;
+    let gameweek = gameweeks.findBy('label', gameweekId);
+
+    if (gameweek == null) {
+      gameweek = this.store.createRecord('gameweek');
+      gameweek.label = gameweekId;
+
+      yield gameweek.save();
+    }
   }
 }

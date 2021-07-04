@@ -4,8 +4,9 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class LastManStandingComponent extends Component {
-  @tracked currentGameweek = this.args.game.currentGameweek;
   @service store;
+  @service game;
+  @tracked currentGameweek = this.game.currentGameweek;
 
   @action
   setGameweek(event) {

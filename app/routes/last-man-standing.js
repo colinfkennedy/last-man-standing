@@ -1,32 +1,36 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import rawFixtures from 'last-man-standing/data/fixtures';
+import RSVP from 'rsvp';
 
 export default class LastManStandingRoute extends Route {
   @service store;
 
-  async model() {
-    let clubs = await this.store.findAll('club');
-    let babbers = await this.store.findAll('babber');
-
-    let game = this.store.createRecord('game');
-    this.parseRawFixtures(clubs, game);
-
-    this.addDummyFixtureResults();
-
-    this.addDummySelections(babbers, clubs);
-
-    return {
-      clubs: clubs,
-      game: game,
-      gameweeks: this.store.peekAll('gameweek'),
-      selections: this.store.peekAll('selection'),
-      babbers: babbers,
-    };
+  model() {
+    return RSVP.hash({
+      clubs: this.store.findAll('club'),
+      babbers: this.store.findAll('babber'),
+      gameweeks: this.store.findAll('gameweek'),
+      games: this.store.findAll('game'),
+    });
   }
 
-  addDummySelections(babbers, clubs) {
-    let gameweek = this.store.peekRecord('gameweek', 1);
+  afterModel(model) {
+    // let { clubs, babbers, gameweeks } = model;
+
+    let clubs = this.store.peekAll('club');
+    let babbers = this.store.peekAll('babber');
+    let gameweeks = this.store.peekAll('gameweek');
+
+    this.parseRawFixtures(clubs, gameweeks);
+
+    this.addDummyFixtureResults(gameweeks);
+
+    this.addDummySelections(babbers, clubs, gameweeks);
+  }
+
+  addDummySelections(babbers, clubs, gameweeks) {
+    let gameweek = gameweeks.findBy('label', '1');
     let manUnited = clubs.findBy('name', 'Manchester United');
     let arsenal = clubs.findBy('name', 'Arsenal');
     let brighton = clubs.findBy('name', 'Brighton and Hove Albion');
@@ -61,7 +65,7 @@ export default class LastManStandingRoute extends Route {
     selectionRecord5.club = chelsea;
     selectionRecord5.gameweek = gameweek;
 
-    let gameweek2 = this.store.peekRecord('gameweek', 2);
+    let gameweek2 = gameweeks.findBy('label', '2');
     let liverpool = clubs.findBy('name', 'Liverpool');
     let burnley = clubs.findBy('name', 'Burnley');
     let joe = babbers.findBy('name', 'Joe');
@@ -78,8 +82,9 @@ export default class LastManStandingRoute extends Route {
     selectionRecordGw2Paddy.gameweek = gameweek2;
   }
 
-  addDummyFixtureResults() {
-    let gameweekOneFixtures = this.store.peekRecord('gameweek', 1).fixtures;
+  addDummyFixtureResults(gameweeks) {
+    debugger;
+    let gameweekOneFixtures = gameweeks.findBy('label', '1').fixtures;
 
     gameweekOneFixtures.objectAt(0).homeScore = 3;
     gameweekOneFixtures.objectAt(0).awayScore = 0;
@@ -111,24 +116,18 @@ export default class LastManStandingRoute extends Route {
     gameweekOneFixtures.objectAt(9).homeScore = 3;
     gameweekOneFixtures.objectAt(9).awayScore = 3;
 
-    let gameweekTwoFixtures = this.store.peekRecord('gameweek', 2).fixtures;
+    let gameweekTwoFixtures = gameweeks.findBy('label', '2').fixtures;
 
     gameweekTwoFixtures.objectAt(0).homeScore = 1;
     gameweekTwoFixtures.objectAt(0).awayScore = 0;
   }
 
-  parseRawFixtures(clubs, game) {
+  parseRawFixtures(clubs, gameweeks) {
     rawFixtures.pages.forEach((page) => {
       page.content.forEach((fixture) => {
         let gameweekId = fixture.gameweek.gameweek;
-        let gameweek = this.store.peekRecord('gameweek', gameweekId);
-        if (gameweek == null) {
-          gameweek = this.store.createRecord('gameweek', {
-            id: gameweekId,
-          });
-          gameweek.label = gameweekId;
-          gameweek.gameOwner = game;
-        }
+        //TODO fix that we don't need to toString gameweekID
+        let gameweek = gameweeks.findBy('label', gameweekId.toString());
 
         let homeTeamName = fixture.teams[0].team.name;
         let awayTeamName = fixture.teams[1].team.name;
