@@ -45,7 +45,6 @@ export default class GameService extends Service {
   }
 
   defaultSelection(babber, gameweek) {
-    let clubs = this.store.peekAll('club');
     let relevantGameweeks = this.gameForGameweek(gameweek).gameweeks.map(
       (gameweek) => gameweek.label
     );
@@ -58,8 +57,8 @@ export default class GameService extends Service {
     let previousAlphabetPicks =
       relevantGameweeks.indexOf(gameweek.label) - alreadySelected.length;
 
-    let club = clubs
-      .filter((club) => !alreadySelected.includes(club.name))
+    let club = gameweek.clubs
+      .filter((club) => !alreadySelected.includes(club.get('name')))
       .sortBy('name')
       .slice(previousAlphabetPicks, 100).firstObject;
 

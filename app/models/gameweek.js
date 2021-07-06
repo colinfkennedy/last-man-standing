@@ -19,7 +19,7 @@ export default class GameweekModel extends Model {
   }
 
   get losingTeams() {
-    return this.fixtures.map((fixture) => fixture.losingTeam).compact();
+    return this.fixtures.mapBy('losingTeam').compact();
   }
 
   isLosingSelection(selection) {
@@ -65,5 +65,11 @@ export default class GameweekModel extends Model {
   get end() {
     return this.fixtures.map((fixture) => fixture.kickoff).sort((a, b) => a - b)
       .lastObject;
+  }
+
+  get clubs() {
+    let homeTeams = this.fixtures.getEach('homeTeam');
+    let awayTeams = this.fixtures.getEach('awayTeam');
+    return homeTeams.concat(awayTeams);
   }
 }
