@@ -83,7 +83,6 @@ export default class LastManStandingRoute extends Route {
   }
 
   addDummyFixtureResults(gameweeks) {
-    debugger;
     let gameweekOneFixtures = gameweeks.findBy('label', '1').fixtures;
 
     gameweekOneFixtures.objectAt(0).homeScore = 3;

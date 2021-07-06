@@ -8,6 +8,10 @@ export default class LastManStandingComponent extends Component {
   @service game;
   @tracked currentGameweek = this.game.currentGameweek;
 
+  get gameweeks() {
+    return this.store.peekAll('gameweek').sortBy('start');
+  }
+
   @action
   setGameweek(event) {
     let gameweekId = event.target.value;
