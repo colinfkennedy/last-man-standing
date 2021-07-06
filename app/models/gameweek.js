@@ -1,7 +1,6 @@
 import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import { isPresent } from '@ember/utils';
 import { inject as service } from '@ember/service';
-import EmberObject from '@ember/object';
 
 export default class GameweekModel extends Model {
   @attr('string') label;
@@ -51,34 +50,11 @@ export default class GameweekModel extends Model {
         'babber.name',
         babber.name
       );
-      gameweekSelection = gameweekSelection || this.defaultSelection(babber);
+      gameweekSelection =
+        gameweekSelection || this.game.defaultSelection(babber, this);
       gameweekSelection.lost = this.isLosingSelection(gameweekSelection);
       return gameweekSelection;
     });
-  }
-
-  defaultSelection(babber) {
-    let clubs = this.store.peekAll('club');
-    let alreadySelected = babber.selections.map((selection) =>
-      selection.get('club.name')
-    );
-    //TODO Fix this for games that don't start on gameweek 1.
-    let previousAlphabetPicks =
-      parseInt(this.label) - 1 - alreadySelected.length;
-
-    let club = clubs
-      .filter((club) => !alreadySelected.includes(club.name))
-      .sortBy('name')
-      .slice(previousAlphabetPicks, 100).firstObject;
-
-    let alphabetSelection = EmberObject.create({
-      babber,
-      club,
-      gameweek: this,
-      isAlphabetPick: true,
-    });
-
-    return alphabetSelection;
   }
 
   get start() {
