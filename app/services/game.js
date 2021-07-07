@@ -44,28 +44,48 @@ export default class GameService extends Service {
     return babbers.reject((babber) => loserIds.includes(babber.id));
   }
 
-  defaultSelection(babber, gameweek) {
+  previousSelections(gameweek, babber) {
     let relevantGameweeks = this.gameForGameweek(gameweek).gameweeks.map(
-      (gameweek) => gameweek.label
+      (gameweekRecord) => gameweekRecord.label
     );
-    let alreadySelected = babber.selections
+    //Remove current gameweek
+    relevantGameweeks = relevantGameweeks.removeObject(gameweek.get('label'));
+    return babber
+      .get('selections')
       .filter((selection) => {
         return relevantGameweeks.includes(selection.gameweek.get('label'));
       })
       .map((selection) => selection.get('club.name'));
+  }
+
+  clubsForGameweek(gameweek, babber) {
+    let alreadySelected = this.previousSelections(gameweek, babber);
+
+    return gameweek
+      .get('clubs')
+      .filter((club) => !alreadySelected.includes(club.get('name')))
+      .sortBy('name');
+  }
+
+  defaultSelection(babber, gameweek) {
+    let relevantGameweeks = this.gameForGameweek(gameweek).gameweeks.map(
+      (gameweek) => gameweek.label
+    );
+
+    let alreadySelected = this.previousSelections(gameweek, babber);
 
     let previousAlphabetPicks =
       relevantGameweeks.indexOf(gameweek.label) - alreadySelected.length;
 
-    let club = gameweek.clubs
-      .filter((club) => !alreadySelected.includes(club.get('name')))
-      .sortBy('name')
-      .slice(previousAlphabetPicks, 100).firstObject;
+    let club = this.clubsForGameweek(gameweek, babber).slice(
+      previousAlphabetPicks,
+      100
+    ).firstObject;
 
     let alphabetSelection = EmberObject.create({
       babber,
       club,
-      gameweek: this,
+      gameweek,
       isAlphabetPick: true,
     });
 

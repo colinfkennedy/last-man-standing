@@ -23,7 +23,7 @@ export default class GameModel extends Model {
   }
 
   hasGameweek(gameweek) {
-    let gameweekId = parseInt(gameweek.label);
+    let gameweekId = parseInt(gameweek.get('label'));
 
     return (
       gameweekId >= parseInt(this.startGameweek.get('label')) &&
