@@ -4,16 +4,21 @@ import { inject as service } from '@ember/service';
 
 export default class GameweekSelectionComponent extends Component {
   @service game;
-  selector;
+  @service store;
 
   @action
-  saveSelection() {
-    console.log('Save selection');
-  }
-
-  @action
-  storeSelector(element) {
-    this.selector = element;
+  saveSelection(event) {
+    let club = this.store.peekRecord('club', event.target.value);
+    console.log(`Save selection ${club.name}`);
+    let currentSelection = this.args.selection;
+    if (currentSelection.isAlphabetPick) {
+      let newSelection = this.store.createRecord('selection');
+      newSelection.babber = currentSelection.babber;
+      newSelection.club = club;
+      newSelection.gameweek = currentSelection.gameweek;
+    } else {
+      currentSelection.club = club;
+    }
   }
 
   get eligibleTeams() {
