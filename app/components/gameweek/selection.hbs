@@ -1,5 +1,5 @@
 <div
-  class="flex flex-col flex-grow rounded-xl  w-full shadow lg:max-w-2xl border p-4 space-y-4 {{if @selection.isAlphabetPick 'bg-gray-100'}} {{if @selection.lost 'bg-red-100'}}"
+  class="flex flex-col flex-grow rounded-xl  w-full shadow lg:max-w-2xl border p-4 space-y-4 {{if @selection.isAlphabetPick 'bg-gray-300'}} {{if @selection.lost 'bg-red-100' 'bg-gray-50'}}"
 >
   <div class="flex flex-row items-center">
     <Babber @babber={{@selection.babber}}/>
@@ -7,7 +7,7 @@
       <Club @club={{@selection.club}} class="text-right flex-row-reverse -mr-2" />
     {{/if}}
   </div>
-  <select {{on "change" this.saveSelection}} class="form-select rounded-md border" disabled={{this.gameweekStarted}}>
+  <select {{on "change" this.saveSelection}} class="form-select rounded-md border disabled:opacity-5" disabled={{this.gameweekStarted}}>
     {{#each this.eligibleTeams as |team|}}
       <option
         value={{team.id}}
