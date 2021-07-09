@@ -21,6 +21,10 @@ export default class GameweekSelectionComponent extends Component {
     }
   }
 
+  get gameweekStarted() {
+    return new Date('August 13, 2021 20:00:00') >= this.args.selection.get('gameweek.start');
+  }
+
   get eligibleTeams() {
     let { gameweek, babber } = this.args.selection;
 

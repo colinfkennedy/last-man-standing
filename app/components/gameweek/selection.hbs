@@ -7,7 +7,7 @@
       <Club @club={{@selection.club}} class="text-right flex-row-reverse -mr-2" />
     {{/if}}
   </div>
-  <select {{on "change" this.saveSelection}} class="form-select rounded-md border">
+  <select {{on "change" this.saveSelection}} class="form-select rounded-md border" disabled={{this.gameweekStarted}}>
     {{#each this.eligibleTeams as |team|}}
       <option
         value={{team.id}}
