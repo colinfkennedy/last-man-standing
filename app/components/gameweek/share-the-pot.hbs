@@ -1,0 +1,19 @@
+<div class="flex flex-col flex-grow p-4 space-y-4">
+  <div class="text-center text-xl lg:text-2xl font-thin">
+    SHARED THE POT
+  </div>
+  <div class="flex flex-row justify-center content-center">
+    {{#each @winners as |winner|}}
+      <div class="flex flex-col">
+        <img
+          src="/last-man-standing/assets/{{winner.photo}}"
+          class="inline-block h-48 w-48 rounded ring-2 ring-white ml-12 mr-12"
+          title={{winner.name}}
+        />
+        <div class="text-center mt-2">
+          🏆 {{winner.name}} 🏆
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

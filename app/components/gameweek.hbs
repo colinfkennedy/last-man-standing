@@ -5,6 +5,10 @@
       <Gameweek::Winner @winner={{@gameweek.winner}} />
     {{/if}}
 
+    {{#if @gameweek.winners}}
+      <Gameweek::ShareThePot @winners={{@gameweek.winners}} />
+    {{/if}}
+
     <div class="text-center text-xl lg:text-2xl font-thin">
       SELECTIONS
     </div>

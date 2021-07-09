@@ -18,6 +18,14 @@ export default class GameweekModel extends Model {
     return winner;
   }
 
+  get winners() {
+    let winners;
+    if (this.winningSelections.length === 0) {
+      winners = this.eligibleBabbers;
+    }
+    return winners;
+  }
+
   get losingTeams() {
     return this.fixtures.mapBy('losingTeam').compact();
   }
