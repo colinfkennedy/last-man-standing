@@ -12,6 +12,7 @@ export default class LastManStandingRoute extends Route {
       babbers: this.store.findAll('babber'),
       gameweeks: this.store.findAll('gameweek'),
       games: this.store.findAll('game'),
+      selections: this.store.findAll('selection'),
     });
   }
 
@@ -26,7 +27,7 @@ export default class LastManStandingRoute extends Route {
 
     this.addDummyFixtureResults(gameweeks);
 
-    this.addDummySelections(babbers, clubs, gameweeks);
+    // this.addDummySelections(babbers, clubs, gameweeks);
   }
 
   addDummySelections(babbers, clubs, gameweeks) {

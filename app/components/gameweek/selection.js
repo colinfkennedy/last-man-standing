@@ -1,6 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { task } from 'ember-concurrency';
 
 export default class GameweekSelectionComponent extends Component {
   @service game;
@@ -16,13 +17,20 @@ export default class GameweekSelectionComponent extends Component {
       newSelection.babber = currentSelection.babber;
       newSelection.club = club;
       newSelection.gameweek = currentSelection.gameweek;
+      this.persistSelection.perform(newSelection);
     } else {
       currentSelection.club = club;
+      this.persistSelection.perform(currentSelection);
     }
   }
 
+  @task
+  *persistSelection(selection) {
+    yield selection.save();
+  }
+
   get gameweekStarted() {
-    return new Date('August 13, 2021 20:00:00') >= this.args.selection.get('gameweek.start');
+    return new Date() >= this.args.selection.get('gameweek.start');
   }
 
   get eligibleTeams() {
