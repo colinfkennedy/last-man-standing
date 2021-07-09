@@ -1,10 +1,12 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import EmberObject from '@ember/object';
+import { cached } from '@glimmer/tracking';
 
 export default class GameService extends Service {
   @service store;
 
+  @cached
   get currentGameweek() {
     let now = new Date();
     return this.store

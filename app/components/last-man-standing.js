@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { tracked } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
 export default class LastManStandingComponent extends Component {
@@ -8,6 +8,7 @@ export default class LastManStandingComponent extends Component {
   @service game;
   @tracked currentGameweek = this.game.currentGameweek;
 
+  @cached
   get gameweeks() {
     return this.store.peekAll('gameweek').sortBy('start');
   }

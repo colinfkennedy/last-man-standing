@@ -1,4 +1,5 @@
 import Model, { attr, belongsTo } from '@ember-data/model';
+import { cached } from '@glimmer/tracking';
 
 export default class FixtureModel extends Model {
   @attr('date') kickoff;
@@ -8,6 +9,7 @@ export default class FixtureModel extends Model {
   @attr('number') homeScore;
   @attr('number') awayScore;
 
+  @cached
   get losingTeam() {
     if (this.homeScore > this.awayScore) {
       return this.awayTeam;
@@ -18,6 +20,7 @@ export default class FixtureModel extends Model {
     }
   }
 
+  @cached
   get hasScore() {
     return this.homeScore !== undefined && this.awayScore !== undefined;
   }

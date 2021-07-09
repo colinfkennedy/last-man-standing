@@ -1,6 +1,7 @@
 import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import { isPresent } from '@ember/utils';
 import { inject as service } from '@ember/service';
+import { cached } from '@glimmer/tracking';
 
 export default class GameweekModel extends Model {
   @attr('string') label;
@@ -10,6 +11,7 @@ export default class GameweekModel extends Model {
   @service store;
   @service game;
 
+  @cached
   get winner() {
     let winner;
     if (this.winningSelections.length === 1) {
@@ -18,14 +20,21 @@ export default class GameweekModel extends Model {
     return winner;
   }
 
+  @cached
   get winners() {
     let winners;
-    if (this.winningSelections.length === 0) {
+    if (this.winningSelections.length === 0 || this.endOfSeasonShare) {
       winners = this.eligibleBabbers;
     }
     return winners;
   }
 
+  @cached
+  get endOfSeasonShare() {
+    return !this.winner && this.label === '38';
+  }
+
+  @cached
   get losingTeams() {
     return this.fixtures.mapBy('losingTeam').compact();
   }
@@ -40,14 +49,17 @@ export default class GameweekModel extends Model {
     }
   }
 
+  @cached
   get eligibleBabbers() {
     return this.game.babbersForGameweek(this);
   }
 
+  @cached
   get winningSelections() {
     return this.selectionsWithDefaults.reject((selection) => selection.lost);
   }
 
+  @cached
   get losingSelections() {
     return this.selectionsWithDefaults.filter((selection) => selection.lost);
   }
@@ -65,16 +77,19 @@ export default class GameweekModel extends Model {
     });
   }
 
+  @cached
   get start() {
     return this.fixtures.map((fixture) => fixture.kickoff).sort((a, b) => b - a)
       .lastObject;
   }
 
+  @cached
   get end() {
     return this.fixtures.map((fixture) => fixture.kickoff).sort((a, b) => a - b)
       .lastObject;
   }
 
+  @cached
   get clubs() {
     let homeTeams = this.fixtures.getEach('homeTeam');
     let awayTeams = this.fixtures.getEach('awayTeam');

@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
+import { cached } from '@glimmer/tracking';
 
 export default class GameweekSelectionComponent extends Component {
   @service game;
@@ -29,10 +30,12 @@ export default class GameweekSelectionComponent extends Component {
     yield selection.save();
   }
 
+  @cached
   get gameweekStarted() {
     return new Date() >= this.args.selection.get('gameweek.start');
   }
 
+  @cached
   get eligibleTeams() {
     let { gameweek, babber } = this.args.selection;
 
