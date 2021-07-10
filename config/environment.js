@@ -20,11 +20,6 @@ module.exports = function (environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      Parse: {
-        url: 'https://parseapi.back4app.com',
-        appId: 'n3mP3kHO2C683mycrV7dnyKeqaE8WH31IJtE8yEc',
-        jsApiId: 'NXIcBhTGhbMegFfrorRm8aAnZm71NLzWYTtC9Uk6',
-      },
     },
   };
 

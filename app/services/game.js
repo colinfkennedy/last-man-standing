@@ -9,6 +9,7 @@ export default class GameService extends Service {
   @cached
   get currentGameweek() {
     let now = new Date();
+
     return this.store
       .peekAll('gameweek')
       .sortBy('start')
