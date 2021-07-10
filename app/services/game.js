@@ -31,7 +31,7 @@ export default class GameService extends Service {
 
     return relevantGame.gameweeks.filter(
       (gameweekRecord) =>
-        parseInt(gameweekRecord.label) < parseInt(gameweek.label)
+        parseInt(gameweekRecord.get('label')) < parseInt(gameweek.get('label'))
     );
   }
 
@@ -47,42 +47,35 @@ export default class GameService extends Service {
   }
 
   previousSelections(gameweek, babber) {
-    let relevantGameweeks = this.gameForGameweek(gameweek).gameweeks.map(
-      (gameweekRecord) => gameweekRecord.label
-    );
-    //Remove current gameweek
-    relevantGameweeks = relevantGameweeks.removeObject(gameweek.get('label'));
+    let previousGameweeks = this.previousGameweeks(gameweek).mapBy('label');
+
     return babber
       .get('selections')
       .filter((selection) => {
-        return relevantGameweeks.includes(selection.gameweek.get('label'));
+        return previousGameweeks.includes(selection.gameweek.get('label'));
       })
       .map((selection) => selection.get('club.name'));
   }
 
   clubsForGameweek(gameweek, babber) {
-    let alreadySelected = this.previousSelections(gameweek, babber);
-
-    return gameweek
-      .get('clubs')
-      .filter((club) => !alreadySelected.includes(club.get('name')))
-      .sortBy('name');
-  }
-
-  defaultSelection(babber, gameweek) {
     let relevantGameweeks = this.gameForGameweek(gameweek).gameweeks.map(
       (gameweek) => gameweek.label
     );
-
     let alreadySelected = this.previousSelections(gameweek, babber);
 
-    let previousAlphabetPicks =
-      relevantGameweeks.indexOf(gameweek.label) - alreadySelected.length;
+    let clubsForGameweek = gameweek
+      .get('clubs')
+      .filter((club) => !alreadySelected.includes(club.get('name')))
+      .sortBy('name');
 
-    let club = this.clubsForGameweek(gameweek, babber).slice(
-      previousAlphabetPicks,
-      100
-    ).firstObject;
+    let previousAlphabetPicks =
+      relevantGameweeks.indexOf(gameweek.get('label')) - alreadySelected.length;
+
+    return clubsForGameweek.slice(previousAlphabetPicks, 100);
+  }
+
+  defaultSelection(babber, gameweek) {
+    let club = this.clubsForGameweek(gameweek, babber).firstObject;
 
     let alphabetSelection = EmberObject.create({
       babber,
