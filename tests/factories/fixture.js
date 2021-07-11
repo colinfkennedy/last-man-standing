@@ -10,4 +10,11 @@ FactoryGuy.define('fixture', {
       `August ${FactoryGuy.generate('fixtureDay')}, 2021 15:00:00`
     ),
   },
+
+  traits: {
+    withHomeTeamWin: (fixture) => {
+      fixture.homeScore = 2;
+      fixture.awayScore = 1;
+    },
+  },
 });
