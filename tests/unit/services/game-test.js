@@ -184,4 +184,96 @@ module('Unit | Service | game', function (hooks) {
       );
     });
   });
+
+  // eslint-disable-next-line no-unused-vars
+  module('previousSelections', function (hooks) {
+    test('with a babber and one previous selection, returns that selection', function (assert) {
+      let babber = make('babber');
+      let club = make('club');
+      let gameweeks = makeList('gameweek', 3);
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+
+      make('selection', {
+        babber,
+        club,
+        gameweek: gameweeks[0],
+      });
+
+      let game = this.owner.lookup('service:game');
+
+      let previousSelections = game.previousSelections(gameweeks[2], babber);
+
+      assert.equal(
+        previousSelections.length,
+        1,
+        'Returns only one previous selection'
+      );
+
+      assert.equal(
+        previousSelections[0],
+        club.name,
+        'Returns correct selection'
+      );
+    });
+
+    test('with a babber a selection for a different gameweek, does not return that selection', function (assert) {
+      let babber = make('babber');
+      let club = make('club');
+      let gameweeks = makeList('gameweek', 3);
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+
+      make('selection', {
+        babber,
+        club,
+        gameweek: gameweeks[2],
+      });
+
+      let game = this.owner.lookup('service:game');
+
+      let previousSelections = game.previousSelections(gameweeks[1], babber);
+
+      assert.equal(
+        previousSelections.length,
+        0,
+        'Returns no previous selections'
+      );
+    });
+
+    test('with a babber a selection for previous gameweek but in a different game, does not return that selection', function (assert) {
+      let babber = make('babber');
+      let club = make('club');
+      let gameweeks = makeList('gameweek', 4);
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[1],
+      });
+
+      make('game', {
+        startGameweek: gameweeks[2],
+        endGameweek: gameweeks[3],
+      });
+
+      make('selection', {
+        babber,
+        club,
+        gameweek: gameweeks[0],
+      });
+
+      let game = this.owner.lookup('service:game');
+
+      let previousSelections = game.previousSelections(gameweeks[2], babber);
+
+      assert.equal(
+        previousSelections.length,
+        0,
+        'Returns no previous selections'
+      );
+    });
+  });
 });
