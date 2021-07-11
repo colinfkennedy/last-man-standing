@@ -59,9 +59,9 @@ export default class GameService extends Service {
   }
 
   clubsForGameweek(gameweek, babber) {
-    let relevantGameweeks = this.gameForGameweek(gameweek).gameweeks.map(
-      (gameweek) => gameweek.label
-    );
+    let relevantGameweeks = this.gameForGameweek(gameweek)
+      .gameweeks.sortBy('label')
+      .map((gameweek) => gameweek.label);
     let alreadySelected = this.previousSelections(gameweek, babber);
 
     let clubsForGameweek = gameweek

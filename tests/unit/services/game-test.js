@@ -276,4 +276,144 @@ module('Unit | Service | game', function (hooks) {
       );
     });
   });
+
+  // eslint-disable-next-line no-unused-vars
+  module('clubsForGameweek', function (hooks) {
+    test('with four clubs, first gameweek returns all clubs', function (assert) {
+      let babber = make('babber');
+      let clubs = makeList('club', 4);
+      let gameweeks = makeList('gameweek', 3);
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+      make('fixture', {
+        homeTeam: clubs[0],
+        awayTeam: clubs[1],
+        gameweek: gameweeks[0],
+      });
+      make('fixture', {
+        homeTeam: clubs[2],
+        awayTeam: clubs[3],
+        gameweek: gameweeks[0],
+      });
+
+      let game = this.owner.lookup('service:game');
+
+      let clubsForGameweek = game.clubsForGameweek(gameweeks[0], babber);
+
+      assert.equal(clubsForGameweek.length, 4, 'Returns all clubs');
+
+      assert.equal(
+        clubsForGameweek[0].get('name'),
+        clubs[0].get('name'),
+        'Returns first club'
+      );
+      assert.equal(
+        clubsForGameweek[1].get('name'),
+        clubs[1].get('name'),
+        'Returns second club'
+      );
+      assert.equal(
+        clubsForGameweek[2].get('name'),
+        clubs[2].get('name'),
+        'Returns third club'
+      );
+      assert.equal(
+        clubsForGameweek[3].get('name'),
+        clubs[3].get('name'),
+        'Returns fourth club'
+      );
+    });
+
+    test('with four clubs, second gameweek returns three clubs', function (assert) {
+      let babber = make('babber');
+      let clubs = makeList('club', 4);
+      let gameweeks = makeList('gameweek', 3);
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+      make('fixture', {
+        homeTeam: clubs[0],
+        awayTeam: clubs[1],
+        gameweek: gameweeks[1],
+      });
+      make('fixture', {
+        homeTeam: clubs[2],
+        awayTeam: clubs[3],
+        gameweek: gameweeks[1],
+      });
+
+      let game = this.owner.lookup('service:game');
+
+      let clubsForGameweek = game.clubsForGameweek(gameweeks[1], babber);
+
+      assert.equal(clubsForGameweek.length, 3, 'Returns three clubs');
+
+      assert.equal(
+        clubsForGameweek[0].get('name'),
+        clubs[1].get('name'),
+        'Returns second club'
+      );
+      assert.equal(
+        clubsForGameweek[1].get('name'),
+        clubs[2].get('name'),
+        'Returns third club'
+      );
+      assert.equal(
+        clubsForGameweek[2].get('name'),
+        clubs[3].get('name'),
+        'Returns fourth club'
+      );
+    });
+
+    test('with four clubs and a selection in gameweek one, second gameweek returns three clubs', function (assert) {
+      let babber = make('babber');
+      let clubs = makeList('club', 4);
+      let gameweeks = makeList('gameweek', 3);
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+      make('fixture', {
+        homeTeam: clubs[0],
+        awayTeam: clubs[1],
+        gameweek: gameweeks[1],
+      });
+      make('fixture', {
+        homeTeam: clubs[2],
+        awayTeam: clubs[3],
+        gameweek: gameweeks[1],
+      });
+
+      make('selection', {
+        babber,
+        club: clubs[2],
+        gameweek: gameweeks[0],
+      });
+
+      let game = this.owner.lookup('service:game');
+
+      let clubsForGameweek = game.clubsForGameweek(gameweeks[1], babber);
+
+      assert.equal(clubsForGameweek.length, 3, 'Returns three clubs');
+
+      assert.equal(
+        clubsForGameweek[0].get('name'),
+        clubs[0].get('name'),
+        'Returns second club'
+      );
+      assert.equal(
+        clubsForGameweek[1].get('name'),
+        clubs[1].get('name'),
+        'Returns third club'
+      );
+      assert.equal(
+        clubsForGameweek[2].get('name'),
+        clubs[3].get('name'),
+        'Returns fourth club'
+      );
+    });
+  });
 });
