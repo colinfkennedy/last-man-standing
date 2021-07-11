@@ -71,7 +71,7 @@ export default class GameweekModel extends Model {
         babber.name
       );
       gameweekSelection =
-        gameweekSelection || this.game.defaultSelection(babber, this);
+        gameweekSelection || this.game.defaultSelection(this, babber);
       gameweekSelection.lost = this.isLosingSelection(gameweekSelection);
       return gameweekSelection;
     });

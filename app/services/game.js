@@ -75,7 +75,7 @@ export default class GameService extends Service {
     return clubsForGameweek.slice(previousAlphabetPicks, 100);
   }
 
-  defaultSelection(babber, gameweek) {
+  defaultSelection(gameweek, babber) {
     let club = this.clubsForGameweek(gameweek, babber).firstObject;
 
     let alphabetSelection = EmberObject.create({
