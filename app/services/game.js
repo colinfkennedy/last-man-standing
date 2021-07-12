@@ -47,8 +47,35 @@ export default class GameService extends Service {
     return babbers.reject((babber) => loserIds.includes(babber.id));
   }
 
+  previousRelevantGameweeks(gameweek) {
+    let relevantGame = this.gameForGameweek(gameweek);
+    let relevantGameweeks = relevantGame.gameweeks.sort((a, b) =>
+      parseInt(a.get('label') - parseInt(b.get('label')))
+    );
+    let numberOfClubs = this.store.peekAll('club').length;
+
+    let gameweekIndex = relevantGameweeks
+      .mapBy('label')
+      .indexOf(gameweek.get('label'));
+
+    if (numberOfClubs > 1) {
+      while (gameweekIndex >= numberOfClubs) {
+        relevantGameweeks = relevantGameweeks.slice(numberOfClubs);
+        gameweekIndex = relevantGameweeks
+          .mapBy('label')
+          .indexOf(gameweek.get('label'));
+      }
+    }
+
+    return relevantGameweeks.filter(
+      (gameweekRecord) =>
+        parseInt(gameweekRecord.get('label')) < parseInt(gameweek.get('label'))
+    );
+  }
+
   previousSelections(gameweek, babber) {
-    let previousGameweeks = this.previousGameweeks(gameweek).mapBy('label');
+    let previousGameweeks =
+      this.previousRelevantGameweeks(gameweek).mapBy('label');
 
     return babber
       .get('selections')
@@ -59,9 +86,8 @@ export default class GameService extends Service {
   }
 
   clubsForGameweek(gameweek, babber) {
-    let relevantGameweeks = this.gameForGameweek(gameweek)
-      .gameweeks.sortBy('label')
-      .map((gameweek) => gameweek.label);
+    let relevantGameweeks = this.previousRelevantGameweeks(gameweek);
+
     let alreadySelected = this.previousSelections(gameweek, babber);
 
     let clubsForGameweek = gameweek
@@ -70,9 +96,9 @@ export default class GameService extends Service {
       .sortBy('name');
 
     let previousAlphabetPicks =
-      relevantGameweeks.indexOf(gameweek.get('label')) - alreadySelected.length;
+      relevantGameweeks.length - alreadySelected.length;
 
-    return clubsForGameweek.slice(previousAlphabetPicks, 100);
+    return clubsForGameweek.slice(previousAlphabetPicks);
   }
 
   defaultSelection(gameweek, babber) {
