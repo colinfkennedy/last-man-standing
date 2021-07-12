@@ -7,8 +7,7 @@ export default class Router extends EmberRouter {
 }
 
 Router.map(function () {
-  this.route('last-man-standing', { path: ':id' });
-  this.route('admin', function() {
+  this.route('admin', function () {
     this.route('fixtures');
   });
 });
