@@ -10,4 +10,5 @@ Router.map(function () {
   this.route('admin', function () {
     this.route('fixtures');
   });
+  this.route('leaderboard');
 });

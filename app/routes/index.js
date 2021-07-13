@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import rawFixtures from 'last-man-standing/data/fixtures';
 import RSVP from 'rsvp';
+import rawFixtures from 'last-man-standing/data/fixtures';
 
 export default class IndexRoute extends Route {
   @service store;

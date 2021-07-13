@@ -1,0 +1,21 @@
+<div class="flex flex-col items-center space-y-4 p-4">
+  <div class="flex flex-col flex-grow rounded-xl border w-full shadow lg:max-w-2xl pb-2">
+    <table class="mt-2">
+      <thead>
+      <tr class="">
+        <th><!--Name--></th>
+        <th class="text-left">GP</th>
+        <th class="text-left">W</th>
+        <th class="text-left">D</th>
+        <th class="text-left">L</th>
+        <th class="text-left">Total</th>
+      </tr>
+      </thead>
+      <tbody>
+      {{#each this.orderedTotals as |standing index|}}
+        <Leaderboard::Row @standing={{standing}} @index={{index}} @totalRows={{this.orderedTotals.length}}/>
+      {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>
