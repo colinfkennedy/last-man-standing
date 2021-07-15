@@ -2,15 +2,35 @@
   <div class="flex flex-row justify-between">
     <div class="flex flex-col">
       <div>Game</div>
-      <div>{{@game.label}}</div>
+      <Input
+        @value={{@game.label}}
+      />
     </div>
     <div class="flex flex-col">
       <div>Start Gameweek</div>
-      <div>{{@game.startGameweek.label}}</div>
+      <select {{on "change" this.setStartGameweek}} class="form-select rounded-md border disabled:opacity-5">
+        {{#each @gameweeks as |gameweek|}}
+          <option
+            value={{gameweek.id}}
+            selected={{if (eq gameweek.id @game.startGameweek.id) 'selected'}}
+          >
+            {{gameweek.label}}
+          </option>
+        {{/each}}
+      </select>
     </div>
     <div class="flex flex-col">
       <div>End Gameweek</div>
-      <div>{{@game.endGameweek.label}}</div>
+      <select {{on "change" this.setEndGameweek}} class="form-select rounded-md border disabled:opacity-5">
+        {{#each @gameweeks as |gameweek|}}
+          <option
+            value={{gameweek.id}}
+            selected={{if (eq gameweek.id @game.endGameweek.id) 'selected'}}
+          >
+            {{gameweek.label}}
+          </option>
+        {{/each}}
+      </select>
     </div>
     <div class="flex flex-col">
       <div>Winner</div>

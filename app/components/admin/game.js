@@ -12,6 +12,24 @@ export default class AdminGameComponent extends Component {
   }
 
   @action
+  setLabel(event) {
+    debugger;
+    this.args.game.label = event.target.value;
+  }
+
+  @action
+  setStartGameweek(event) {
+    let gameweek = this.args.gameweeks.findBy('id', event.target.value);
+    this.args.game.startGameweek = gameweek;
+  }
+
+  @action
+  setEndGameweek(event) {
+    let gameweek = this.args.gameweeks.findBy('id', event.target.value);
+    this.args.game.endGameweek = gameweek;
+  }
+
+  @action
   saveGame() {
     this.args.game.save();
   }
