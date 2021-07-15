@@ -1,0 +1,13 @@
+<div class="flex flex-col space-y-2">
+  <div class="flex flex-col">
+    <div class="text-center text-xl lg:text-2xl font-thin">
+      Games
+    </div>
+
+    <div class="flex flex-col items-center space-y-4 p-4">
+      {{#each @games as |game|}}
+        <Admin::Game @game={{game}} @babbers={{@babbers}}/>
+      {{/each}}
+    </div>
+  </div>
+</div>

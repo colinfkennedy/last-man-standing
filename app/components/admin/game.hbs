@@ -1,0 +1,39 @@
+<div class="flex flex-col flex-grow rounded-xl w-full shadow lg:max-w-2xl p-4 space-y-2 border">
+  <div class="flex flex-row justify-between">
+    <div class="flex flex-col">
+      <div>Game</div>
+      <div>{{@game.label}}</div>
+    </div>
+    <div class="flex flex-col">
+      <div>Start Gameweek</div>
+      <div>{{@game.startGameweek.label}}</div>
+    </div>
+    <div class="flex flex-col">
+      <div>End Gameweek</div>
+      <div>{{@game.endGameweek.label}}</div>
+    </div>
+    <div class="flex flex-col">
+      <div>Winner</div>
+      {{#if this.winners}}
+          {{#each this.winners as |winner|}}
+            <Babber @babber={{winner}}/>
+          {{/each}}
+      {{else}}
+        Ongoing
+        <select name="winner-selector" class="form-select min-w-max w-1/5 rounded-md ml-4 mr-4 border border-premPurple" {{on "change" this.setWinner}} multiple>
+          {{#each @babbers as |babber|}}
+            <option value={{babber.id}}>{{babber.name}}</option>
+          {{/each}}
+        </select>
+      {{/if}}
+      {{#if @game.hasDirtyAttributes}}
+        <button
+          class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+          {{on 'click' this.saveGame}}
+        >
+          Save Game
+        </button>
+      {{/if}}
+    </div>
+  </div>
+</div>

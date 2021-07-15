@@ -5,7 +5,7 @@ import { cached } from '@glimmer/tracking';
 export default class GameModel extends Model {
   @service store;
   @attr('string') label;
-  @belongsTo('babber') winner;
+  @attr('array') winners;
   @belongsTo('gameweek', { inverse: null }) startGameweek;
   @belongsTo('gameweek', { inverse: null }) endGameweek;
 

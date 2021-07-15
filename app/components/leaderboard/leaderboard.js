@@ -13,7 +13,7 @@ export default class LeaderboardLeaderboardComponent extends Component {
   @cached
   get gamesWithWinners() {
     return this.args.games.reject((game) => {
-      return game.winner.get('id') === undefined;
+      return game.winners.length === 0;
     });
   }
 
@@ -21,16 +21,19 @@ export default class LeaderboardLeaderboardComponent extends Component {
     return this.args.babbers
       .map((babber) => {
         let played = this.gamesPlayed;
-        let won = this.args.games.filterBy('winner.id', babber.id).length;
-        let lost = this.gamesWithWinners.rejectBy(
-          'winner.id',
-          babber.id
-        ).length;
-        let total = won * 40 - played * 5;
+        let won = this.args.games.filter((game) => {
+          return game.winners.length === 1 && game.winners.includes(babber.id);
+        }).length;
+        let drawnGames = this.args.games.filter((game) => {
+          return game.winners.length > 1 && game.winners.includes(babber.id);
+        });
+        let drawnWinnings = drawnGames.map((game) => 40 / game.winners.length);
+        let lost = played - won - drawnGames.length;
+        let total = won * 40 + drawnWinnings - played * 5;
         let babberStanding = {
           played,
           won,
-          drawn: 0,
+          drawn: drawnGames.length,
           lost,
           total: `€${total}`,
           babber: babber,

@@ -120,6 +120,16 @@ export default class IndexRoute extends Route {
 
     gameweekTwoFixtures.objectAt(0).homeScore = 1;
     gameweekTwoFixtures.objectAt(0).awayScore = 0;
+
+    let gameweekThreeFixtures = gameweeks.findBy('label', '3').fixtures;
+
+    gameweekThreeFixtures.objectAt(0).homeScore = 1;
+    gameweekThreeFixtures.objectAt(0).awayScore = 0;
+
+    let gameweekFourFixtures = gameweeks.findBy('label', '4').fixtures;
+
+    gameweekFourFixtures.objectAt(0).homeScore = 1;
+    gameweekFourFixtures.objectAt(0).awayScore = 0;
   }
 
   parseRawFixtures(clubs, gameweeks) {
