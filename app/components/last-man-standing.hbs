@@ -1,11 +1,11 @@
 <div class="flex flex-col space-y-2 pt-4">
   <div class="flex flex-row justify-between">
-    <select name="gameweek-selector" class="form-select min-w-max rounded-md ml-4 mr-4 border border-premPurple" {{on "change" this.setGameweek}}>
+    <select name="gameweek-selector" class="text-xs lg:text-base form-select min-w-max rounded-md ml-4 mr-4 border border-premPurple" {{on "change" this.setGameweek}}>
       {{#each this.gameweeks as |gameweek|}}
         <option value={{gameweek.id}} selected={{if (eq gameweek this.currentGameweek) 'selected'}}>Gameweek {{gameweek.label}}</option>
       {{/each}}
     </select>
-    <LinkTo class="min-w-max rounded-md ml-4 mr-4 p-2 border border-premPurple" @route="leaderboard">Leaderboard</LinkTo>
+    <LinkTo class="text-xs lg:text-base min-w-max rounded-md ml-4 mr-4 p-2 border border-premPurple" @route="leaderboard">Leaderboard</LinkTo>
   </div>
   <Gameweek @gameweek={{this.currentGameweek}}/>
 </div>
