@@ -22,10 +22,22 @@ export default class LeaderboardLeaderboardComponent extends Component {
       .map((babber) => {
         let played = this.gamesPlayed;
         let won = this.args.games.filter((game) => {
-          return game.winners.length === 1 && game.winners.includes(babber.id);
+          if (game.winners) {
+            return (
+              game.winners.length === 1 && game.winners.includes(babber.id)
+            );
+          } else {
+            return false;
+          }
         }).length;
         let drawnGames = this.args.games.filter((game) => {
-          return game.winners.length > 1 && game.winners.includes(babber.id);
+          if (game.winners) {
+            return (
+              game.winners.length > 1 && game.winners.includes(babber.id)
+            );
+          } else {
+            return false;
+          }
         });
         let drawnWinnings = drawnGames.map((game) => 40 / game.winners.length);
         let lost = played - won - drawnGames.length;

@@ -46,14 +46,12 @@
           {{/each}}
         </select>
       {{/if}}
-      {{#if @game.hasDirtyAttributes}}
-        <button
-          class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-          {{on 'click' this.saveGame}}
-        >
-          Save Game
-        </button>
-      {{/if}}
+      <button
+        class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+        {{on 'click' this.saveGame}}
+      >
+        Save Game
+      </button>
     </div>
   </div>
 </div>

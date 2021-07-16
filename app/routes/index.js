@@ -133,6 +133,10 @@ export default class IndexRoute extends Route {
   }
 
   parseRawFixtures(clubs, gameweeks) {
+    let existingFixtures = this.store.peekAll('fixture');
+    if (existingFixtures.length > 0) {
+      return;
+    }
     rawFixtures.pages.forEach((page) => {
       page.content.forEach((fixture) => {
         let gameweekId = fixture.gameweek.gameweek;
