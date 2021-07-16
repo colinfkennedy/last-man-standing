@@ -2,26 +2,38 @@
   <div class="text-center text-xl lg:text-2xl font-thin">
     THE LAST MAN STANDING
   </div>
-  <div class="flex flex-row justify-center content-center">
-    <img
-      src="/last-man-standing/assets/phil-jacuzzi.jpeg"
-      class="inline-block h-36 w-36 rounded ring-2 ring-white"
-      title={{@babber.name}}
-    />
+  <div class="flex flex-row justify-center items-center">
+    <div class="flex flex-col w-1/3">
+      <img
+        src="/last-man-standing/assets/phil-jacuzzi.jpeg"
+        class="inline-block rounded ring-2 ring-white"
+        title={{@babber.name}}
+      />
+    </div>
     <div class="flex flex-col">
       <img
         src="/last-man-standing/assets/{{@winner.photo}}"
-        class="inline-block h-48 w-48 rounded ring-2 ring-white ml-12 mr-12"
+        class="inline-block rounded ring-2 ring-white ml-12 mr-12"
         title={{@winner.name}}
       />
-      <div class="text-center mt-2">
-        🏆 {{@winner.name}} 🏆
-      </div>
     </div>
-    <img
-      src="/last-man-standing/assets/phil-spice-boy.png"
-      class="inline-block h-36 w-36 rounded ring-2 ring-white"
-      title={{@babber.name}}
-    />
+    <div class="flex flex-col w-1/3">
+      <img
+        src="/last-man-standing/assets/phil-spice-boy-sm.png"
+        class="inline-block rounded ring-2 ring-white"
+        title={{@babber.name}}
+      />
+    </div>
+  </div>
+  <div class="flex flex-row justify-center mt-6 mb-6">
+    <div class="text-center mr-8">
+      🏆
+    </div>
+    <div class="text-center">
+      {{@winner.name}}
+    </div>
+    <div class="text-center ml-8">
+      🏆
+    </div>
   </div>
 </div>
