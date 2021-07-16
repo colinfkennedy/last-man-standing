@@ -47,7 +47,7 @@ export default class LeaderboardLeaderboardComponent extends Component {
           won,
           drawn: drawnGames.length,
           lost,
-          total: `€${total}`,
+          total: total,
           babber: babber,
         };
         return babberStanding;
