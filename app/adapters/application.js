@@ -1,12 +1,13 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { assign } from '@ember/polyfills';
+import ENV from 'last-man-standing/config/environment';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
   host = 'https://parseapi.back4app.com';
   namespace = 'classes';
   headers = {
-    'X-Parse-Application-Id': 'n3mP3kHO2C683mycrV7dnyKeqaE8WH31IJtE8yEc',
-    'X-Parse-Client-Key': 'JuHDw0dNg7DFiYkwZgeBCXy1kZSllyxpotYWx3cs',
+    'X-Parse-Application-Id': ENV.APP.application_id,
+    'X-Parse-Client-Key': ENV.APP.client_key,
   };
 
   pathForType(type) {
