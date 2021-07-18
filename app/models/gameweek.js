@@ -39,16 +39,6 @@ export default class GameweekModel extends Model {
     return this.fixtures.mapBy('losingTeam').compact();
   }
 
-  isLosingSelection(selection) {
-    if (isPresent(selection.club)) {
-      return isPresent(
-        this.losingTeams.findBy('name', selection.get('club.name'))
-      );
-    } else {
-      return false;
-    }
-  }
-
   @cached
   get eligibleBabbers() {
     return this.game.babbersForGameweek(this);
@@ -64,6 +54,7 @@ export default class GameweekModel extends Model {
     return this.selectionsWithDefaults.filter((selection) => selection.lost);
   }
 
+  @cached
   get selectionsWithDefaults() {
     return this.eligibleBabbers.map((babber) => {
       let gameweekSelection = this.selections.findBy(
@@ -72,7 +63,6 @@ export default class GameweekModel extends Model {
       );
       gameweekSelection =
         gameweekSelection || this.game.defaultSelection(this, babber);
-      gameweekSelection.lost = this.isLosingSelection(gameweekSelection);
       return gameweekSelection;
     });
   }

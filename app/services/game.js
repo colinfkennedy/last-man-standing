@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import EmberObject from '@ember/object';
 import { cached } from '@glimmer/tracking';
+import { isPresent } from '@ember/utils';
 
 export default class GameService extends Service {
   @service store;
@@ -103,11 +104,16 @@ export default class GameService extends Service {
 
   defaultSelection(gameweek, babber) {
     let club = this.clubsForGameweek(gameweek, babber).firstObject;
+    //TODO This logic is in two places - here and in selection model
+    let lost = isPresent(
+      gameweek.get('losingTeams').findBy('name', club.get('name'))
+    );
 
     let alphabetSelection = EmberObject.create({
       babber,
       club,
       gameweek,
+      lost,
       isAlphabetPick: true,
     });
 
