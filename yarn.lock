@@ -4666,6 +4666,13 @@ debug@^3.0.1, debug@^3.1.0, debug@^3.1.1:
   dependencies:
     ms "^2.1.1"
 
+debug@^4.3.1:
+  version "4.3.2"
+  resolved "https://registry.yarnpkg.com/debug/-/debug-4.3.2.tgz#f0a49c18ac8779e31d4a0c6029dfb76873c7428b"
+  integrity sha512-mOp8wKcvj7XxC78zLgw/ZA+6TSgkoE2C/ienthhRD298T7UNwAg9diBpLRxC0mOezLl4B0xV7M0cCO6P/O0Xhw==
+  dependencies:
+    ms "2.1.2"
+
 decimal.js@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/decimal.js/-/decimal.js-10.2.1.tgz#238ae7b0f0c793d3e3cea410108b35a2c01426a3"
@@ -5046,6 +5053,15 @@ ember-cli-github-pages@^0.2.2:
     ember-cli-version-checker "^2.1.0"
     rsvp "^4.7.0"
 
+ember-cli-head@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/ember-cli-head/-/ember-cli-head-2.0.0.tgz#ce294341026fd643067712a438008d6139f5208d"
+  integrity sha512-i9qwljBlpzU/ei0xN+FiCHUvU1ZdjVXk0OzRKoeMZJK3m4p29CvB095klT0q+PigvYFYHIyTaeSWmbgjP8CZiw==
+  dependencies:
+    ember-cli-babel "^7.26.3"
+    ember-cli-htmlbars "^5.7.1"
+    ember-in-element-polyfill "^1.0.0"
+
 ember-cli-htmlbars@^3.0.1:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-3.1.0.tgz#87806c2a0bca2ab52d4fb8af8e2215c1ca718a99"
@@ -5056,7 +5072,7 @@ ember-cli-htmlbars@^3.0.1:
     json-stable-stringify "^1.0.1"
     strip-bom "^3.0.0"
 
-ember-cli-htmlbars@^5.6.3, ember-cli-htmlbars@^5.7.1:
+ember-cli-htmlbars@^5.3.1, ember-cli-htmlbars@^5.6.3, ember-cli-htmlbars@^5.7.1:
   version "5.7.1"
   resolved "https://registry.yarnpkg.com/ember-cli-htmlbars/-/ember-cli-htmlbars-5.7.1.tgz#eb5b88c7d9083bc27665fb5447a9b7503b32ce4f"
   integrity sha512-9laCgL4tSy48orNoQgQKEHp93MaqAs9ZOl7or5q+8iyGGJHW6sVXIYrVv5/5O9HfV6Ts8/pW1rSoaeKyLUE+oA==
@@ -5478,6 +5494,16 @@ ember-fetch@^8.0.4:
     ember-cli-version-checker "^5.1.2"
     node-fetch "^2.6.1"
     whatwg-fetch "^3.6.2"
+
+ember-in-element-polyfill@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ember-in-element-polyfill/-/ember-in-element-polyfill-1.0.1.tgz#143504445bb4301656a2eaad42644d684f5164dd"
+  integrity sha512-eHs+7D7PuQr8a1DPqsJTsEyo3FZ1XuH6WEZaEBPDa9s0xLlwByCNKl8hi1EbXOgvgEZNHHi9Rh0vjxyfakrlgg==
+  dependencies:
+    debug "^4.3.1"
+    ember-cli-babel "^7.23.1"
+    ember-cli-htmlbars "^5.3.1"
+    ember-cli-version-checker "^5.1.2"
 
 ember-inflector@^4.0.1:
   version "4.0.1"
