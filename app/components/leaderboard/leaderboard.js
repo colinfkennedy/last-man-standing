@@ -32,9 +32,7 @@ export default class LeaderboardLeaderboardComponent extends Component {
         }).length;
         let drawnGames = this.args.games.filter((game) => {
           if (game.winners) {
-            return (
-              game.winners.length > 1 && game.winners.includes(babber.id)
-            );
+            return game.winners.length > 1 && game.winners.includes(babber.id);
           } else {
             return false;
           }

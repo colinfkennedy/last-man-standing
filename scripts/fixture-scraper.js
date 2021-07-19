@@ -30,21 +30,25 @@ function retreiveJsonPromise(response) {
   let fixtureJson = await Promise.all(fixturePromises);
   let fixtureFile = {
     pages: fixtureJson,
-  }
+  };
   console.log('Fixtures JSON: ', fixtureJson);
 
-  fs.writeFile(`./fixtures-${format(new Date(), 'yyyy-MM-dd').toString()}.json`, JSON.stringify(fixtureFile, null, 3), (err) => {
-    if (err) {
-      console.error(err);
-      return;
+  fs.writeFile(
+    `./fixtures-${format(new Date(), 'yyyy-MM-dd').toString()}.json`,
+    JSON.stringify(fixtureFile, null, 3),
+    (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      console.log('Wrote fixtures');
     }
-    console.log("Wrote fixtures");
-  });
+  );
 
   await browser.close();
 })();
 
-async function autoScroll(page){
+async function autoScroll(page) {
   await page.evaluate(async () => {
     await new Promise((resolve, reject) => {
       var totalHeight = 0;
@@ -54,7 +58,7 @@ async function autoScroll(page){
         window.scrollBy(0, distance);
         totalHeight += distance;
 
-        if(totalHeight >= scrollHeight){
+        if (totalHeight >= scrollHeight) {
           clearInterval(timer);
           resolve();
         }

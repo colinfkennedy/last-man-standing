@@ -5,6 +5,17 @@ import rawFixtures from 'last-man-standing/data/fixtures';
 
 export default class IndexRoute extends Route {
   @service store;
+  @service game;
+
+  beforeModel() {
+    let currentUser = Parse.User.current();
+    if (currentUser) {
+      this.game.setSessionToken(currentUser.getSessionToken());
+    } else {
+      //Redirect to login
+      this.transitionTo('login');
+    }
+  }
 
   model() {
     return RSVP.hash({

@@ -4,25 +4,42 @@
       Fixtures Admin
     </div>
     <button
-      class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-      {{on 'click' this.createGameweeks}}
+      class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createGameweeks}}
     >
       Create Gameweeks
     </button>
 
     <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-      {{on 'click' this.createClubs}}
+      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createClubs}}
     >
       Create Clubs
     </button>
 
     <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-      {{on 'click' this.createFixture}}
+      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createFixture}}
     >
       Create Fixture
     </button>
+
+    <button
+      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createUser}}
+    >
+      Create User
+    </button>
+
+    <button
+      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createRole}}
+    >
+      Create Role
+    </button>
+
+    <button
+      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.updateRole}}
+    >
+      Update Role
+    </button>
+
+
 
     {{#each @gameweeks as |gameweek|}}
       <div class="text-center text-xl lg:text-2xl font-thin text-gray-300">

@@ -15,8 +15,8 @@ export default class DateTransform extends Transform {
     }
 
     return {
-      __type : 'Date',
-      iso    : deserialized.toISOString()
+      __type: 'Date',
+      iso: deserialized.toISOString(),
     };
   }
 }

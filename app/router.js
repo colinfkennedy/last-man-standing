@@ -12,4 +12,5 @@ Router.map(function () {
     this.route('games');
   });
   this.route('leaderboard');
+  this.route('login');
 });

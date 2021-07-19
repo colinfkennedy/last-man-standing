@@ -3,9 +3,19 @@ import { inject as service } from '@ember/service';
 import EmberObject from '@ember/object';
 import { cached } from '@glimmer/tracking';
 import { isPresent } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
 
 export default class GameService extends Service {
+  @tracked sessionToken;
   @service store;
+
+  setCurrentUser(user) {
+
+  }
+
+  setSessionToken(sessionToken) {
+    this.sessionToken = sessionToken;
+  }
 
   @cached
   get currentGameweek() {

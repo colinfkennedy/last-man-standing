@@ -1,0 +1,47 @@
+<div class="flex flex-col items-center space-y-4 pt-4">
+  {{#if this.errorMessage}}
+    <div class="flex flex-row">
+      <span class="text-red-500">{{this.errorMessage}}</span>
+    </div>
+  {{/if}}
+  <div class="flex flex-row">
+    <label class="block">
+      <span class="text-gray-700">Username</span>
+
+      <Input
+        @id="username"
+        @value={{this.username}}
+        class="form-input mt-1 block w-64 border rounded-md border-premPurple"
+      />
+    </label>
+  </div>
+
+  <div class="flex flex-row">
+    <label class="block">
+      <span class="text-gray-700">Password</span>
+
+      <Input
+        @id="pasword"
+        @value={{this.password}}
+        @type="password"
+        class="form-input mt-1 block w-64 border rounded-md border-premPurple"
+      />
+    </label>
+  </div>
+
+  <div class="flex flex-row pt-2">
+    <button
+      class="w-64 bg-white hover:bg-gray-100 text-white font-semibold py-2 px-4 border border-premPurple bg-premPurple hover:text-premPurple rounded-md shadow" type="button" {{on 'click' this.login}}
+    >
+      Login
+    </button>
+  </div>
+
+  <div class="flex flex-row pt-2">
+    <button
+      class="w-64 bg-white hover:bg-gray-100 text-white font-semibold py-2 px-4 border border-premPurple bg-premPurple hover:text-premPurple rounded-md shadow" type="button" {{on 'click' this.logout}}
+    >
+      Logout
+    </button>
+  </div>
+</div>

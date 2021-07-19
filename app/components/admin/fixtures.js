@@ -18,6 +18,78 @@ export default class AdminFixturesComponent extends Component {
     this.createFixtureAsync.perform();
   }
 
+  @action
+  createUser() {
+    this.createUserAsync.perform();
+  }
+
+  @task
+  *createUserAsync() {
+    const user = new Parse.User();
+    user.set('username', 'stephen');
+    user.set('name', 'Stephen');
+    user.set('photo', 'babb/stephen.png');
+    user.set('email', 'stephenking83@gmail.com');
+    user.set('password', 'stephen');
+
+    try {
+      let userResult = yield user.signUp();
+      console.log('User signed up', userResult);
+    } catch (error) {
+      console.error('Error while signing up user', error);
+    }
+  }
+
+  @action
+  createRole() {
+    this.createRoleAsync.perform();
+  }
+
+  @task
+  *createRoleAsync() {
+    const roleACL = new Parse.ACL();
+    roleACL.setPublicReadAccess(true);
+    roleACL.setPublicWriteAccess(true);
+    const role = new Parse.Role('Babber', roleACL);
+    let response = yield role.save();
+    console.log('Role created', response);
+  }
+
+  @action
+  updateRole() {
+    this.updateRoleAsync.perform();
+  }
+
+  @task
+  *updateRoleAsync() {
+    let userQuery = new Parse.Query(Parse.User);
+    let colin = yield userQuery.get('XiIbeWrSJD');
+    let coman = yield userQuery.get('Hf2PJBGFBa');
+    let eoin = yield userQuery.get('grP4aojelL');
+    let stephen = yield userQuery.get('KHKy6pwf0P');
+    let sean = yield userQuery.get('Eyl9rMsno7');
+    let paddy = yield userQuery.get('vmGqDpWAs1');
+    let paul = yield userQuery.get('DUFbSi04uT');
+    let joe = yield userQuery.get('8Rpi7LhHpQ');
+    let usersToAddToRole = [
+      colin,
+      coman,
+      eoin,
+      stephen,
+      sean,
+      paddy,
+      paul,
+      joe,
+    ];
+
+    const roleQuery = new Parse.Query(Parse.Role);
+    // let adminRole = yield roleQuery.get('jvRLSjHY9k');
+    let babberRole = yield roleQuery.get('fnFEXIW7oS');
+    babberRole.getUsers().add(usersToAddToRole);
+    let response = yield babberRole.save();
+    console.log('Role updated', response);
+  }
+
   @task
   *createFixtureAsync() {
     let fixture = rawFixtures.pages[0].content[0];
