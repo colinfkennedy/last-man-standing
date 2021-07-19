@@ -1,5 +1,4 @@
 import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
-import { isPresent } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
 

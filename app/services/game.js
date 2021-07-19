@@ -9,8 +9,8 @@ export default class GameService extends Service {
   @tracked sessionToken;
   @service store;
 
-  setCurrentUser(user) {
-
+  getCurrentUser() {
+    return Parse.User.current();
   }
 
   setSessionToken(sessionToken) {

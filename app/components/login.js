@@ -5,10 +5,11 @@ import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 
 export default class LoginComponent extends Component {
+  @service router;
+  @service game;
   @tracked username;
   @tracked password;
   @tracked errorMessage;
-  @service game;
 
   @action
   login() {
@@ -24,20 +25,9 @@ export default class LoginComponent extends Component {
       });
 
       this.game.setSessionToken(user.getSessionToken());
+      this.router.transitionTo('index');
     } catch (e) {
       this.errorMessage = e.message;
     }
-  }
-
-  @action
-  logout() {
-    this.performLogout.perform();
-  }
-
-  @task
-  *performLogout() {
-    this.errorMessage = null;
-    yield Parse.User.logOut();
-    this.errorMessage = 'Logged out';
   }
 }

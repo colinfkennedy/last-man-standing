@@ -1,4 +1,4 @@
-<div class="flex flex-col space-y-2 pt-4">
+<div class="flex flex-col space-y-2 pt-6 pb-4">
   <div class="flex flex-row justify-between pl-4 pr-4">
     <select name="gameweek-selector" class="text-xs lg:text-base form-select min-w-max rounded-md border border-premPurple" {{on "change" this.setGameweek}}>
       {{#each this.gameweeks as |gameweek|}}
@@ -8,4 +8,11 @@
     <LinkTo class="text-xs lg:text-base min-w-max rounded-md p-2 border border-premPurple" @route="leaderboard">Leaderboard</LinkTo>
   </div>
   <Gameweek @gameweek={{this.currentGameweek}}/>
+  <div class="flex flex-col pt-2 items-center">
+    <button
+      class="w-64 bg-white hover:bg-gray-100 text-white font-semibold py-2 px-4 border border-premPurple bg-premPurple hover:text-premPurple rounded-md shadow" type="button" {{on 'click' this.logout}}
+    >
+      Logout
+    </button>
+  </div>
 </div>
