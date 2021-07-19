@@ -41,4 +41,10 @@ export default class GameweekSelectionComponent extends Component {
 
     return this.game.clubsForGameweek(gameweek, babber);
   }
+
+  get isCurrentUser() {
+    return (
+      this.game.currentUser.id === this.args.selection.get('babber.id')
+    );
+  }
 }
