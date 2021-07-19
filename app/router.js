@@ -13,4 +13,5 @@ Router.map(function () {
   });
   this.route('leaderboard');
   this.route('login');
+  this.route('loading');
 });

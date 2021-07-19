@@ -13,7 +13,6 @@ export default class AdminGameComponent extends Component {
 
   @action
   setLabel(event) {
-    debugger;
     this.args.game.label = event.target.value;
   }
 

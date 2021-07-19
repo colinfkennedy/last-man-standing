@@ -3,11 +3,11 @@ import { assign } from '@ember/polyfills';
 import ENV from 'last-man-standing/config/environment';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
-  host = 'https://parseapi.back4app.com';
+  host = ENV.APP.parseServerUrl;
   namespace = 'classes';
   headers = {
-    'X-Parse-Application-Id': ENV.APP.application_id,
-    'X-Parse-Client-Key': ENV.APP.client_key,
+    'X-Parse-Application-Id': ENV.APP.applicationId,
+    'X-Parse-Client-Key': ENV.APP.restClientKey,
   };
 
   pathForType(type) {

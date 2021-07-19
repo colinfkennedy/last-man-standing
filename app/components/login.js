@@ -24,7 +24,7 @@ export default class LoginComponent extends Component {
         usePost: true,
       });
 
-      this.game.setSessionToken(user.getSessionToken());
+      this.game.currentUser = user;
       this.router.transitionTo('index');
     } catch (e) {
       this.errorMessage = e.message;

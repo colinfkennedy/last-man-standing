@@ -20,8 +20,10 @@ module.exports = function (environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      application_id: 'n3mP3kHO2C683mycrV7dnyKeqaE8WH31IJtE8yEc',
-      client_key: 'JuHDw0dNg7DFiYkwZgeBCXy1kZSllyxpotYWx3cs',
+      applicationId: 'n3mP3kHO2C683mycrV7dnyKeqaE8WH31IJtE8yEc',
+      restClientKey: 'JuHDw0dNg7DFiYkwZgeBCXy1kZSllyxpotYWx3cs',
+      javascriptClientKey: 'NXIcBhTGhbMegFfrorRm8aAnZm71NLzWYTtC9Uk6',
+      parseServerUrl: 'https://parseapi.back4app.com',
     },
   };
 

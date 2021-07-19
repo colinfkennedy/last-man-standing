@@ -6,15 +6,11 @@ import { isPresent } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
 
 export default class GameService extends Service {
-  @tracked sessionToken;
+  @tracked currentUser = Parse.User.current();
   @service store;
 
-  getCurrentUser() {
-    return Parse.User.current();
-  }
-
-  setSessionToken(sessionToken) {
-    this.sessionToken = sessionToken;
+  get sessionToken() {
+    return this.currentUser.getSessionToken();
   }
 
   @cached

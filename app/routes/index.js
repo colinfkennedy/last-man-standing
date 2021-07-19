@@ -2,20 +2,11 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import rawFixtures from 'last-man-standing/data/fixtures';
+import { action } from '@ember/object';
 
 export default class IndexRoute extends Route {
   @service store;
   @service game;
-
-  beforeModel() {
-    let currentUser = Parse.User.current();
-    if (currentUser) {
-      this.game.setSessionToken(currentUser.getSessionToken());
-    } else {
-      //Redirect to login
-      this.transitionTo('login');
-    }
-  }
 
   model() {
     return RSVP.hash({
@@ -39,6 +30,11 @@ export default class IndexRoute extends Route {
     this.addDummyFixtureResults(gameweeks);
 
     // this.addDummySelections(babbers, clubs, gameweeks);
+  }
+
+  @action
+  loading() {
+    return true; // allows the loading template to be shown
   }
 
   addDummySelections(babbers, clubs, gameweeks) {
