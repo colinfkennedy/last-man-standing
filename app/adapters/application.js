@@ -8,11 +8,14 @@ export default class ApplicationAdapter extends JSONAPIAdapter {
 
   host = ENV.APP.parseServerUrl;
   namespace = 'classes';
-  headers = {
-    'X-Parse-Application-Id': ENV.APP.applicationId,
-    'X-Parse-Client-Key': ENV.APP.restClientKey,
-    'X-Parse-Session-Token': this.game.sessionToken,
-  };
+
+  get headers() {
+    return {
+      'X-Parse-Application-Id': ENV.APP.applicationId,
+      'X-Parse-Client-Key': ENV.APP.restClientKey,
+      'X-Parse-Session-Token': this.game.sessionToken,
+    };
+  }
 
   pathForType(type) {
     return type;
