@@ -1,6 +1,7 @@
 import Model, { attr, hasMany, belongsTo } from '@ember-data/model';
 import { inject as service } from '@ember/service';
 import { cached } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
 export default class GameweekModel extends Model {
   @attr('string') label;
@@ -55,15 +56,29 @@ export default class GameweekModel extends Model {
 
   @cached
   get selectionsWithDefaults() {
-    return this.eligibleBabbers.map((babber) => {
-      let gameweekSelection = this.selections.findBy(
-        'babber.name',
-        babber.name
-      );
-      gameweekSelection =
-        gameweekSelection || this.game.defaultSelection(this, babber);
-      return gameweekSelection;
-    });
+    return this.eligibleBabbers
+      .map((babber) => {
+        let gameweekSelection = this.selections.findBy(
+          'babber.name',
+          babber.name
+        );
+        gameweekSelection =
+          gameweekSelection || this.game.defaultSelection(this, babber);
+        return gameweekSelection;
+      })
+      .sort(this.sortByCurrentUser);
+  }
+
+  @action
+  sortByCurrentUser(a, b) {
+    let currentUserId = this.game.currentUser.id;
+
+    if (b.get('babber.id') === currentUserId) {
+      return 1;
+    } else if (a.get('babber.id') === currentUserId) {
+      return -1;
+    }
+    return 0;
   }
 
   @cached
