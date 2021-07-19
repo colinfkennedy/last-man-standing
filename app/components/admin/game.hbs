@@ -35,17 +35,17 @@
     <div class="flex flex-col">
       <div>Winner</div>
       {{#if this.winners}}
-          {{#each this.winners as |winner|}}
-            <Babber @babber={{winner}}/>
-          {{/each}}
+        {{#each this.winners as |winner|}}
+          <Babber @babber={{winner}}/>
+        {{/each}}
       {{else}}
         Ongoing
-        <select name="winner-selector" class="form-select min-w-max w-1/5 rounded-md ml-4 mr-4 border border-premPurple" {{on "change" this.setWinner}} multiple>
-          {{#each @babbers as |babber|}}
-            <option value={{babber.id}}>{{babber.name}}</option>
-          {{/each}}
-        </select>
       {{/if}}
+      <select name="winner-selector" class="form-select min-w-max w-1/5 rounded-md ml-4 mr-4 border border-premPurple" {{on "change" this.setWinner}} multiple>
+        {{#each @babbers as |babber|}}
+          <option value={{babber.id}}>{{babber.name}}</option>
+        {{/each}}
+      </select>
       <button
         class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.saveGame}}
       >

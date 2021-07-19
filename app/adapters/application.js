@@ -1,13 +1,17 @@
 import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { assign } from '@ember/polyfills';
 import ENV from 'last-man-standing/config/environment';
+import { inject as service } from '@ember/service';
 
 export default class ApplicationAdapter extends JSONAPIAdapter {
+  @service game;
+
   host = ENV.APP.parseServerUrl;
   namespace = 'classes';
   headers = {
     'X-Parse-Application-Id': ENV.APP.applicationId,
     'X-Parse-Client-Key': ENV.APP.restClientKey,
+    'X-Parse-Session-Token': this.game.sessionToken,
   };
 
   pathForType(type) {

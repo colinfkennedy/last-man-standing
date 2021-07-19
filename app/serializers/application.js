@@ -39,10 +39,14 @@ export default class ApplicationSerializer extends JSONSerializer {
     let key = relationship.key;
     let belongsToId = snapshot.belongsTo(key, { id: true });
 
+    //TODO fix this
+    let className =
+      relationship.type === 'babber' ? '_User' : relationship.type;
+
     if (belongsToId) {
       json[key] = {
         __type: 'Pointer',
-        className: relationship.type,
+        className,
         objectId: belongsToId,
       };
     }
