@@ -8,6 +8,6 @@ export default class LoggedInAvatarComponent extends Component {
     let user = this.game.currentUser;
     let avatar = user ? user.get('photo') : 'phil-head.png';
 
-    return `/last-man-standing/assets/${avatar}`;
+    return `/assets/${avatar}`;
   }
 }
