@@ -1,6 +1,6 @@
 <div class="flex flex-col items-center space-y-4 p-4">
-  <div class="flex flex-row w-full justify-end">
-    <LinkTo class="text-xs lg:text-base min-w-max rounded-md p-2 border border-premPurple" @route="index">Current Gameweek</LinkTo>
+  <div class="text-center text-xl lg:text-2xl font-thin">
+    LEADERBOARD
   </div>
   <div class="flex flex-col flex-grow rounded-xl border w-full shadow lg:max-w-2xl pb-2">
     <table class="mt-2">
@@ -21,5 +21,6 @@
       </tbody>
     </table>
   </div>
-  <LogoutButton />
+  <LinkToButton @route="index" @text="Current Gameweek" class="pt-8" />
+  <LogoutButton class="pt-2"/>
 </div>

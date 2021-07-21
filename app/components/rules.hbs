@@ -1,0 +1,48 @@
+<div class="flex flex-col space-y-2 items-center">
+  <div class="flex flex-col lg:max-w-2xl p-4 items-center">
+    <div class="text-center text-xl lg:text-2xl font-thin pb-4">
+      RULES
+    </div>
+
+    <ol class="list-decimal list-inside space-y-4 text-sm lg:text-base">
+      <li>
+        Pick one Premier League team each round. If your selection wins or draws you progress to the next round; lose and you're out.
+      </li>
+      <li>
+        All selections must be made before the first match kicks off in the relevant game week
+      </li>
+      <li>
+        You can amend your selection up to the time of the kick off of the first match in the relevant game week.
+      </li>
+      <li>
+        You may not pick the same team more than once during the competition.
+      </li>
+      <li>
+        Should you forget to make your selection in any week, you will automatically be assigned the next team alphabetically that you have not previously used.
+      </li>
+      <li>
+        In the event that any match involving a team you have selected is postponed or cancelled for any reason, you will continue to the next round. However, that team will no longer be available for selection.
+      </li>
+      <li>
+        Should two or more participants remain standing and all are eliminated in the same week, the Last Person Standing prize will be distributed equally among them.
+      </li>
+      <li>
+        Should two or more participants remain standing and all are eliminated in the same week, the Last Person Standing prize will be distributed equally among them.
+      </li>
+      <li>
+        Note that rounds of fixtures may take place on weekends or mid-week, depending on available fixtures.
+      </li>
+      <li>
+        Should the tournament not have reached a conclusion by the end of the Premier League season the prize will be distributed equally among the remaining contstants.
+      </li>
+      <li>
+        In the event of a dispute, <img src="/assets/babb/joe.png" class="inline-block h-8 lg:h-12 w-8 lg:w-12 rounded-full ring-2 ring-white" title="Joe"/> Joe is right
+      </li>
+    </ol>
+    <div class="flex-grow-0 py-12">
+      <img src="/assets/phil-yellow-card.jpeg" class="inline-block h-72 lg:h-auto rounded-full ring-2 ring-white" title={{@babber.name}}/>
+    </div>
+    <LinkToButton @route="index" @text="Current Gameweek"/>
+    <LogoutButton class="pt-6" />
+  </div>
+</div>

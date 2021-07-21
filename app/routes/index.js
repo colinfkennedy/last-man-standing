@@ -8,6 +8,11 @@ export default class IndexRoute extends Route {
   @service store;
   @service game;
 
+  activate() {
+    super.activate();
+    window.scrollTo(0, 0);
+  }
+
   model() {
     return RSVP.hash({
       clubs: this.store.findAll('club'),
