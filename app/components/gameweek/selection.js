@@ -11,7 +11,6 @@ export default class GameweekSelectionComponent extends Component {
   @action
   saveSelection(event) {
     let club = this.store.peekRecord('club', event.target.value);
-    console.log(`Save selection ${club.name}`);
     let currentSelection = this.args.selection;
     if (currentSelection.isAlphabetPick) {
       let newSelection = this.store.createRecord('selection');
