@@ -10,6 +10,7 @@ Router.map(function () {
   this.route('admin', function () {
     this.route('fixtures');
     this.route('games');
+    this.route('babbers');
   });
   this.route('leaderboard');
   this.route('login');

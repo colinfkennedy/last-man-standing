@@ -1,0 +1,11 @@
+<div class="flex flex-col space-y-2">
+  <div class="pt-4 text-center text-xl lg:text-2xl font-thin">
+    Babbers
+  </div>
+
+  <div class="flex flex-col items-center space-y-4 p-4">
+    {{#each @babbers as |babber|}}
+      <Admin::Babber @babber={{babber}} />
+    {{/each}}
+  </div>
+</div>

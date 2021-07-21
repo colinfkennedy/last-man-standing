@@ -1,0 +1,10 @@
+<div class="flex flex-col flex-grow rounded-xl  w-full shadow lg:max-w-2xl border p-4 space-y-4">
+  <div class="flex flex-row justify-between">
+    <Babber @babber={{@babber}}/>
+    <button
+      class="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-md shadow" type="button" {{on 'click' this.resetPassword}}
+    >
+      Send Reset Password Email
+    </button>
+  </div>
+</div>
