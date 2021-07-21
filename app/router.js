@@ -16,4 +16,5 @@ Router.map(function () {
   this.route('login');
   this.route('loading');
   this.route('rules');
+  this.route('password-reset');
 });
