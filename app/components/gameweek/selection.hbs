@@ -19,4 +19,9 @@
       {{/each}}
     </select>
   {{/if}}
+  {{#if @selection.isError}}
+    <div class="text-sm text-red-500">
+      Something went wrong saving your selection. Please try again.
+    </div>
+  {{/if}}
 </div>
