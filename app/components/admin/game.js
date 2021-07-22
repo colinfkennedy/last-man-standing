@@ -12,6 +12,11 @@ export default class AdminGameComponent extends Component {
   }
 
   @action
+  clearWinner() {
+    this.args.game.winners = [];
+  }
+
+  @action
   setLabel(event) {
     this.args.game.label = event.target.value;
   }

@@ -1,13 +1,13 @@
 <div class="flex flex-col flex-grow rounded-xl w-full shadow lg:max-w-2xl p-4 space-y-2 border">
-  <div class="flex flex-row justify-between">
+  <div class="flex flex-col space-y-2 lg:space-y-0 lg:flex-row lg:justify-between">
     <div class="flex flex-col">
-      <div>Game</div>
-      <Input
+      <div class="font-bold uppercase">Game</div>
+      <Input class="form-input border rounded-md"
         @value={{@game.label}}
       />
     </div>
-    <div class="flex flex-col">
-      <div>Start Gameweek</div>
+    <div class="flex flex-col lg:mx-4">
+      <div class="font-bold uppercase">Start</div>
       <select {{on "change" this.setStartGameweek}} class="form-select rounded-md border disabled:opacity-5">
         {{#each @gameweeks as |gameweek|}}
           <option
@@ -19,8 +19,8 @@
         {{/each}}
       </select>
     </div>
-    <div class="flex flex-col">
-      <div>End Gameweek</div>
+    <div class="flex flex-col lg:mx-4">
+      <div class="font-bold uppercase">End</div>
       <select {{on "change" this.setEndGameweek}} class="form-select rounded-md border disabled:opacity-5">
         {{#each @gameweeks as |gameweek|}}
           <option
@@ -32,8 +32,8 @@
         {{/each}}
       </select>
     </div>
-    <div class="flex flex-col">
-      <div>Winner</div>
+    <div class="flex flex-col space-y-2">
+      <div class="font-bold uppercase">Winner</div>
       {{#if this.winners}}
         {{#each this.winners as |winner|}}
           <Babber @babber={{winner}}/>
@@ -41,16 +41,21 @@
       {{else}}
         Ongoing
       {{/if}}
-      <select name="winner-selector" class="form-select min-w-max w-1/5 rounded-md ml-4 mr-4 border border-premPurple" {{on "change" this.setWinner}} multiple>
+      <select name="winner-selector" class="form-multiselect rounded-md border border-premPurple" {{on "change" this.setWinner}} multiple>
         {{#each @babbers as |babber|}}
-          <option value={{babber.id}}>{{babber.name}}</option>
+          <option value={{babber.id}} selected={{if (includes babber.id this.winners) 'selected'}}>{{babber.name}}</option>
         {{/each}}
       </select>
-      <button
-        class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.saveGame}}
-      >
-        Save Game
-      </button>
+      <div class="hover:underline hover:text-premPurple cursor-pointer" {{on "click" this.clearWinner}}>
+        Clear
+      </div>
     </div>
+  </div>
+  <div class="flex flex-row justify-center">
+    <button
+      class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.saveGame}}
+    >
+      Save Game
+    </button>
   </div>
 </div>
