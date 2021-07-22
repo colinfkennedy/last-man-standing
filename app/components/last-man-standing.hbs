@@ -9,5 +9,8 @@
   </div>
   <Gameweek @gameweek={{this.currentGameweek}}/>
   <LinkToButton @route="rules" @text="Rules" class="pt-4"/>
+  {{#if this.isAdmin}}
+    <LinkToButton @route="admin.games" @text="Admin" class="pt-4"/>
+  {{/if}}
   <LogoutButton class="pt-4"/>
 </div>

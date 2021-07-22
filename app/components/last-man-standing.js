@@ -18,4 +18,8 @@ export default class LastManStandingComponent extends Component {
     let gameweekId = event.target.value;
     this.currentGameweek = this.store.peekRecord('gameweek', gameweekId);
   }
+
+  get isAdmin() {
+    return Parse.User.current().id === 'XiIbeWrSJD';
+  }
 }
