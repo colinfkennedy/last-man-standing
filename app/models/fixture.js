@@ -10,6 +10,22 @@ export default class FixtureModel extends Model {
   @attr('number') awayScore;
 
   @cached
+  get teams() {
+    return [this.homeTeam, this.awayTeam];
+  }
+
+  @cached
+  get winningTeam() {
+    if (this.homeScore > this.awayScore) {
+      return this.homeTeam;
+    } else if (this.awayScore > this.homeScore) {
+      return this.awayTeam;
+    } else {
+      return null;
+    }
+  }
+
+  @cached
   get losingTeam() {
     if (this.homeScore > this.awayScore) {
       return this.awayTeam;

@@ -40,6 +40,11 @@ export default class GameweekModel extends Model {
   }
 
   @cached
+  get allTeamsPlaying() {
+    return this.fixtures.mapBy('teams').flat.compact();
+  }
+
+  @cached
   get eligibleBabbers() {
     return this.game.babbersForGameweek(this);
   }

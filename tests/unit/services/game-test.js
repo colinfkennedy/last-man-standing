@@ -183,6 +183,104 @@ module('Unit | Service | game', function (hooks) {
         'Returns winning babber'
       );
     });
+
+    test('with team with two fixtures in gameweek and first fixture loss, returns only winning babber', function (assert) {
+      let babbers = makeList('babber', 2);
+      let clubs = makeList('club', 3);
+      let gameweeks = makeList('gameweek', 3);
+
+      make('fixture', 'withHomeTeamWin', {
+        gameweek: gameweeks[0],
+        homeTeam: clubs[0],
+        awayTeam: clubs[1],
+      });
+
+      make('fixture', 'withHomeTeamWin', {
+        gameweek: gameweeks[0],
+        homeTeam: clubs[1],
+        awayTeam: clubs[2],
+      });
+
+      make('selection', {
+        babber: babbers[0],
+        club: clubs[1],
+        gameweek: gameweeks[0],
+      });
+
+      make('selection', {
+        babber: babbers[1],
+        club: clubs[0],
+        gameweek: gameweeks[0],
+      });
+
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+      let game = this.owner.lookup('service:game');
+
+      let babbersForGameweek = game.babbersForGameweek(gameweeks[1]);
+
+      assert.equal(babbersForGameweek.length, 1, 'Returns only winning babber');
+
+      assert.equal(
+        babbersForGameweek[0].get('name'),
+        babbers[1].get('name'),
+        'Returns winning babber'
+      );
+    });
+
+    test('with team with two fixtures in gameweek and second fixture loss, returns both babbers', function (assert) {
+      let babbers = makeList('babber', 2);
+      let clubs = makeList('club', 3);
+      let gameweeks = makeList('gameweek', 3);
+
+      make('fixture', 'withHomeTeamWin', {
+        gameweek: gameweeks[0],
+        homeTeam: clubs[0],
+        awayTeam: clubs[1],
+      });
+
+      make('fixture', 'withHomeTeamWin', {
+        gameweek: gameweeks[0],
+        homeTeam: clubs[2],
+        awayTeam: clubs[0],
+      });
+
+      make('selection', {
+        babber: babbers[0],
+        club: clubs[0],
+        gameweek: gameweeks[0],
+      });
+
+      make('selection', {
+        babber: babbers[1],
+        club: clubs[2],
+        gameweek: gameweeks[0],
+      });
+
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+      let game = this.owner.lookup('service:game');
+
+      let babbersForGameweek = game.babbersForGameweek(gameweeks[1]);
+
+      assert.equal(babbersForGameweek.length, 2, 'Returns both babbers');
+
+      assert.equal(
+        babbersForGameweek[0].get('name'),
+        babbers[0].get('name'),
+        'Returns winning babber'
+      );
+
+      assert.equal(
+        babbersForGameweek[1].get('name'),
+        babbers[1].get('name'),
+        'Returns winning babber'
+      );
+    });
   });
 
   // eslint-disable-next-line no-unused-vars
