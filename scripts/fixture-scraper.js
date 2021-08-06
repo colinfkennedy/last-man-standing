@@ -3,6 +3,7 @@ const fs = require('fs');
 const { format } = require('date-fns');
 const fixturesUrl = 'https://www.premierleague.com/fixtures';
 const fixturesApiUrl = 'https://footballapi.pulselive.com/football/fixtures';
+const resultsUrl = 'https://www.premierleague.com/results';
 
 const fixturePromises = [];
 
@@ -14,18 +15,24 @@ function retreiveJsonPromise(response) {
   }
 }
 
-(async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-
-  page.on('response', retreiveJsonPromise);
-  await page.goto(fixturesUrl);
+async function getGameweekData(page, url) {
+  await page.goto(url);
   await page.setViewport({
     width: 1200,
     height: 800,
   });
 
   await autoScroll(page);
+}
+
+(async () => {
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+
+  page.on('response', retreiveJsonPromise);
+
+  await getGameweekData(page, resultsUrl);
+  await getGameweekData(page, fixturesUrl);
 
   let fixtureJson = await Promise.all(fixturePromises);
   let fixtureFile = {
