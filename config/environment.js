@@ -24,6 +24,8 @@ module.exports = function (environment) {
       restClientKey: 'JuHDw0dNg7DFiYkwZgeBCXy1kZSllyxpotYWx3cs',
       javascriptClientKey: 'NXIcBhTGhbMegFfrorRm8aAnZm71NLzWYTtC9Uk6',
       parseServerUrl: 'https://parseapi.back4app.com',
+      firebaseApiKey: 'AIzaSyCgM942_PC0wp1LQ9tM8WghJ34YAX-2O8Q',
+      firebaseProjectId: 'babb-last-man-standing',
     },
   };
 

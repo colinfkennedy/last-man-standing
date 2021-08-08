@@ -1,8 +1,12 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
-import rawFixtures from 'last-man-standing/data/fixtures';
 import { action } from '@ember/object';
+import firebase from 'firebase/app';
+import 'firebase/storage';
+import fetch from 'fetch';
+
+const fixturesFile = 'gs://babb-last-man-standing-fixtures/fixtures.json';
 
 export default class IndexRoute extends Route {
   @service store;
@@ -20,6 +24,7 @@ export default class IndexRoute extends Route {
       gameweeks: this.store.findAll('gameweek'),
       games: this.store.findAll('game'),
       selections: this.store.findAll('selection'),
+      rawFixtures: this.getRawFixtures(),
     });
   }
 
@@ -28,7 +33,7 @@ export default class IndexRoute extends Route {
     let clubs = this.store.peekAll('club');
     let gameweeks = this.store.peekAll('gameweek');
 
-    this.parseRawFixtures(clubs, gameweeks);
+    this.parseRawFixtures(clubs, gameweeks, model.rawFixtures);
   }
 
   @action
@@ -36,11 +41,31 @@ export default class IndexRoute extends Route {
     return true; // allows the loading template to be shown
   }
 
-  parseRawFixtures(clubs, gameweeks) {
+  async getRawFixtures() {
+    // Create a reference with an initial file path and name
+    let storage = firebase.storage();
+
+    let fixturesFileReference = storage.refFromURL(fixturesFile);
+
+    let fixturesDownloadUrl = await fixturesFileReference.getDownloadURL();
+
+    return fetch(fixturesDownloadUrl)
+      .then(function (response) {
+        if (response.ok) {
+          return response.json();
+        }
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  }
+
+  parseRawFixtures(clubs, gameweeks, rawFixtures) {
     let existingFixtures = this.store.peekAll('fixture');
     if (existingFixtures.length > 0) {
       return;
     }
+
     rawFixtures.pages.forEach((page) => {
       page.content.forEach((fixture) => {
         let gameweekId = fixture.gameweek.gameweek;
