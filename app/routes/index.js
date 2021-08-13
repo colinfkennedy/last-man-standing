@@ -83,19 +83,8 @@ export default class IndexRoute extends Route {
 
         let goals = fixture.goals;
 
-        let homeScore, awayScore;
-
-        if (isPresent(goals)) {
-          homeScore = 0;
-          awayScore = 0;
-          goals.forEach((goal) => {
-            if (goal.team === homeTeamName) {
-              homeScore += 1;
-            } else if (goal.team === awayTeamName) {
-              awayScore += 1;
-            }
-          });
-        }
+        let homeScore = fixture.teams[0].score;
+        let awayScore = fixture.teams[1].score;
 
         let fixtureRecord = this.store.createRecord('fixture', {
           gameweek: gameweek,
