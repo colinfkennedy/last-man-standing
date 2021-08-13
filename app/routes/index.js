@@ -5,6 +5,7 @@ import { action } from '@ember/object';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import fetch from 'fetch';
+import { isPresent } from '@ember/utils';
 
 const fixturesFile = 'gs://babb-last-man-standing-fixtures/fixtures.json';
 
@@ -80,17 +81,37 @@ export default class IndexRoute extends Route {
 
         let kickoff = new Date(fixture.kickoff.millis);
 
+        let goals = fixture.goals;
+
+        let homeScore, awayScore;
+
+        if (isPresent(goals)) {
+          homeScore = 0;
+          awayScore = 0;
+          goals.forEach((goal) => {
+            if (goal.team === homeTeamName) {
+              homeScore += 1;
+            } else if (goal.team === awayTeamName) {
+              awayScore += 1;
+            }
+          });
+        }
+
         let fixtureRecord = this.store.createRecord('fixture', {
           gameweek: gameweek,
           homeTeam: homeTeam,
           awayTeam: awayTeam,
           kickoff: kickoff,
+          homeScore: homeScore,
+          awayScore: awayScore,
         });
 
         fixtureRecord.gameweek = gameweek;
         fixtureRecord.homeTeam = homeTeam;
         fixtureRecord.awayTeam = awayTeam;
         fixtureRecord.kickoff = kickoff;
+        fixtureRecord.homeScore = homeScore;
+        fixtureRecord.awayScore = awayScore;
       });
     });
   }
