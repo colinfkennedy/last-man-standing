@@ -68,7 +68,7 @@ export default class IndexRoute extends Route {
     }
 
     rawFixtures.pages.forEach((page) => {
-      page.content.forEach((fixture) => {
+      page.content?.forEach((fixture) => {
         let gameweekId = fixture.gameweek.gameweek;
         //TODO fix that we don't need to toString gameweekID
         let gameweek = gameweeks.findBy('label', gameweekId.toString());
