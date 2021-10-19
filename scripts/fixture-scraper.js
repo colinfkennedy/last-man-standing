@@ -17,8 +17,7 @@ function retreiveJsonPromise(response) {
 function modifyFixtureQueryParams(request) {
   if (request.url().startsWith(fixturesApiUrl)) {
     console.log(`Intercepted fixture url: ${request.url()}`);
-    let url =
-      'https://footballapi.pulselive.com/football/fixtures?comps=1&compSeasons=418&teams=1,2,130,131,43,4,6,7,9,26,10,11,12,23,14,20,21,33,25,38&page=0&pageSize=500&sort=asc&statuses=C,U,L&altIds=true';
+    let url = `${fixturesApiUrl}?comps=1&compSeasons=418&teams=1,2,130,131,43,4,6,7,9,26,10,11,12,23,14,20,21,33,25,38&page=0&pageSize=500&sort=asc&statuses=C,U,L&altIds=true`;
     request.continue({ url });
   } else {
     request.continue();
@@ -34,6 +33,7 @@ async function getGameweekData(page, url) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.setRequestInterception(true);
+  await page.setDefaultNavigationTimeout(180000);
 
   page.on('request', modifyFixtureQueryParams);
   page.on('response', retreiveJsonPromise);
