@@ -91,6 +91,7 @@
     "firebase": "^8.9.0",
     "parse": "^3.2.0",
     "postcss": "^8.3.1",
-    "postcss-import": "^14.0.2"
+    "postcss-import": "^14.0.2",
+    "urlb64touint8array": "^1.0.3"
   }
 }
