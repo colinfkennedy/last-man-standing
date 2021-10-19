@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 const fs = require('fs');
 const { format } = require('date-fns');
-const fixturesUrl = 'https://www.premierleague.com/fixtures';
 const fixturesApiUrl = 'https://footballapi.pulselive.com/football/fixtures';
 const resultsUrl = 'https://www.premierleague.com/results';
 
@@ -9,30 +8,39 @@ const fixturePromises = [];
 
 function retreiveJsonPromise(response) {
   if (response.url().startsWith(fixturesApiUrl)) {
-    console.log('Response url:', response.url());
+    console.log('Processing fixture response url:', response.url());
     fixturePromises.push(response.json());
     console.log('Fixture promises', fixturePromises);
   }
 }
 
-async function getGameweekData(page, url) {
-  await page.goto(url);
-  await page.setViewport({
-    width: 1200,
-    height: 800,
-  });
+function modifyFixtureQueryParams(request) {
+  if (request.url().startsWith(fixturesApiUrl)) {
+    console.log(`Intercepted fixture url: ${request.url()}`);
+    let url =
+      'https://footballapi.pulselive.com/football/fixtures?comps=1&compSeasons=418&teams=1,2,130,131,43,4,6,7,9,26,10,11,12,23,14,20,21,33,25,38&page=0&pageSize=500&sort=asc&statuses=C,U,L&altIds=true';
+    request.continue({ url });
+  } else {
+    request.continue();
+  }
+}
 
-  await autoScroll(page);
+async function getGameweekData(page, url) {
+  console.log(`Processing ${url}`);
+  await page.goto(url, { waitUntil: 'networkidle0' });
 }
 
 (async () => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
+  await page.setRequestInterception(true);
 
+  page.on('request', modifyFixtureQueryParams);
   page.on('response', retreiveJsonPromise);
+  page.on('console', (consoleObj) => console.log(consoleObj.text()));
 
   await getGameweekData(page, resultsUrl);
-  await getGameweekData(page, fixturesUrl);
+  console.log(`Finished ${resultsUrl}`);
 
   let fixtureJson = await Promise.all(fixturePromises);
   let fixtureFile = {
@@ -54,22 +62,3 @@ async function getGameweekData(page, url) {
 
   await browser.close();
 })();
-
-async function autoScroll(page) {
-  await page.evaluate(async () => {
-    await new Promise((resolve, reject) => {
-      var totalHeight = 0;
-      var distance = 100;
-      var timer = setInterval(() => {
-        var scrollHeight = document.body.scrollHeight;
-        window.scrollBy(0, distance);
-        totalHeight += distance;
-
-        if (totalHeight >= scrollHeight) {
-          clearInterval(timer);
-          resolve();
-        }
-      }, 100);
-    });
-  });
-}
