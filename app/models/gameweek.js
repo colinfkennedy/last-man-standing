@@ -71,7 +71,7 @@ export default class GameweekModel extends Model {
 
   @action
   sortByCurrentUser(a, b) {
-    let currentUserId = this.game.currentUser.id;
+    let currentUserId = this.game.currentUser?.id;
 
     if (b.get('babber.id') === currentUserId) {
       return 1;
