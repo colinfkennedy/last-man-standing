@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import firebase from 'firebase/app';
 import 'firebase/storage';
 import fetch from 'fetch';
-import { isPresent } from '@ember/utils';
 
 const fixturesFile = 'gs://babb-last-man-standing-fixtures/fixtures.json';
 
@@ -81,10 +80,10 @@ export default class IndexRoute extends Route {
 
         let kickoff = new Date(fixture.kickoff.millis);
 
-        let goals = fixture.goals;
-
         let homeScore = fixture.teams[0].score;
         let awayScore = fixture.teams[1].score;
+
+        let status = fixture.status;
 
         let fixtureRecord = this.store.createRecord('fixture', {
           gameweek: gameweek,
@@ -93,6 +92,7 @@ export default class IndexRoute extends Route {
           kickoff: kickoff,
           homeScore: homeScore,
           awayScore: awayScore,
+          status: status,
         });
 
         fixtureRecord.gameweek = gameweek;

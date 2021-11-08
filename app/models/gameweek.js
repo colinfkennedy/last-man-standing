@@ -36,7 +36,10 @@ export default class GameweekModel extends Model {
 
   @cached
   get losingTeams() {
-    return this.fixtures.mapBy('losingTeam').compact();
+    return this.fixtures
+      .filter((fixture) => fixture.isCompleted)
+      .mapBy('losingTeam')
+      .compact();
   }
 
   @cached

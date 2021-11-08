@@ -15,6 +15,7 @@ FactoryGuy.define('fixture', {
     withHomeTeamWin: (fixture) => {
       fixture.homeScore = 2;
       fixture.awayScore = 1;
+      fixture.status = 'C';
     },
   },
 });

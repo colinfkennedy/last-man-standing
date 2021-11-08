@@ -8,6 +8,7 @@ export default class FixtureModel extends Model {
   @belongsTo('gameweek') gameweek;
   @attr('number') homeScore;
   @attr('number') awayScore;
+  @attr('string') status;
 
   @cached
   get losingTeam() {
@@ -23,5 +24,9 @@ export default class FixtureModel extends Model {
   @cached
   get hasScore() {
     return this.homeScore !== undefined && this.awayScore !== undefined;
+  }
+
+  get isCompleted() {
+    return this.status === 'C';
   }
 }
