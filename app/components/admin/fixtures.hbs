@@ -1,57 +1,33 @@
-<div class="flex flex-col space-y-2 pt-4">
-  <div class="flex flex-col">
-    <div class="text-center text-xl lg:text-2xl font-thin text-gray-300">
-      Fixtures Admin
-    </div>
-    <button
-      class="w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createGameweeks}}
-    >
-      Create Gameweeks
-    </button>
-
-    <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createClubs}}
-    >
-      Create Clubs
-    </button>
-
-    <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createFixture}}
-    >
-      Create Fixture
-    </button>
-
-    <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createUser}}
-    >
-      Create User
-    </button>
-
-    <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.createRole}}
-    >
-      Create Role
-    </button>
-
-    <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.updateRole}}
-    >
-      Update Role
-    </button>
-
-    <button
-      class="mt-10 w-64 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow" type="button" {{on 'click' this.updateRole}}
-    >
-      Update Role 2
-    </button>
-
-
-
-    {{#each @gameweeks as |gameweek|}}
-      <div class="text-center text-xl lg:text-2xl font-thin text-gray-300">
-        Gameweek {{gameweek.label}}
-      </div>
-      <Gameweek::FixtureList @gameweek={{gameweek}}/>
-    {{/each}}
+<div class='flex flex-col space-y-2 pt-4'>
+  <div class='text-center text-xl lg:text-2xl font-thin text-gray-300'>
+    Fixtures Admin
   </div>
+  <div class='flex flex-row justify-between px-4 mb-4'>
+    <select
+      name='gameweek-selector'
+      class='text-xs lg:text-base form-select min-w-max rounded-md border border-premPurple'
+      {{on 'change' this.setGameweek}}
+    >
+      {{#each this.gameweeks as |gameweek|}}
+        <option
+          value={{gameweek.id}}
+          selected={{if (eq gameweek this.currentGameweek) 'selected'}}
+        >Gameweek {{gameweek.label}}</option>
+      {{/each}}
+    </select>
+  </div>
+
+  <Gameweek::FixtureList @gameweek={{this.currentGameweek}} />
+
+  <div class='flex-row text-center'>
+    <a href={{this.updateFixturesUrl}} target='_blank'>
+      <button
+        class='w-64 bg-white hover:bg-gray-100 text-white font-semibold py-2 px-4 border border-premPurple bg-premPurple hover:text-premPurple rounded-md shadow'
+        type='button'
+      >
+        Update Fixtures
+      </button>
+    </a>
+  </div>
+
 </div>
