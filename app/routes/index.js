@@ -77,13 +77,18 @@ export default class IndexRoute extends Route {
 
         let homeTeam = clubs.findBy('name', homeTeamName);
         let awayTeam = clubs.findBy('name', awayTeamName);
+        let kickoff, status;
 
-        let kickoff = new Date(fixture.kickoff.millis);
+        if (fixture.phase === 'P') {
+          kickoff = new Date(fixture.provisionalKickoff.millis);
+          status = 'P';
+        } else {
+          kickoff = new Date(fixture.kickoff.millis);
+          status = fixture.status;
+        }
 
         let homeScore = fixture.teams[0].score;
         let awayScore = fixture.teams[1].score;
-
-        let status = fixture.status;
 
         let fixtureRecord = this.store.createRecord('fixture', {
           gameweek: gameweek,

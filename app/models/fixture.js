@@ -29,4 +29,8 @@ export default class FixtureModel extends Model {
   get isCompleted() {
     return this.status === 'C';
   }
+
+  get isPostponed() {
+    return this.status === 'P';
+  }
 }
