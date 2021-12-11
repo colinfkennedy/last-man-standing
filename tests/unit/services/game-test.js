@@ -326,6 +326,43 @@ module('Unit | Service | game', function (hooks) {
       );
     });
 
+    test('with four clubs, and one postponed fixture first gameweek returns two clubs', function (assert) {
+      let babber = make('babber');
+      let clubs = makeList('club', 4);
+      let gameweeks = makeList('gameweek', 3);
+      make('game', {
+        startGameweek: gameweeks[0],
+        endGameweek: gameweeks[2],
+      });
+      make('fixture', 'postponed', {
+        homeTeam: clubs[0],
+        awayTeam: clubs[1],
+        gameweek: gameweeks[0],
+      });
+      make('fixture', {
+        homeTeam: clubs[2],
+        awayTeam: clubs[3],
+        gameweek: gameweeks[0],
+      });
+
+      let game = this.owner.lookup('service:game');
+
+      let clubsForGameweek = game.clubsForGameweek(gameweeks[0], babber);
+
+      assert.equal(clubsForGameweek.length, 2, 'Returns two clubs');
+
+      assert.equal(
+        clubsForGameweek[0].get('name'),
+        clubs[2].get('name'),
+        'Returns third club'
+      );
+      assert.equal(
+        clubsForGameweek[1].get('name'),
+        clubs[3].get('name'),
+        'Returns fourth club'
+      );
+    });
+
     test('with four clubs, second gameweek returns three clubs', function (assert) {
       let babber = make('babber');
       let clubs = makeList('club', 4);

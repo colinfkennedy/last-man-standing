@@ -98,8 +98,11 @@ export default class GameweekModel extends Model {
 
   @cached
   get clubs() {
-    let homeTeams = this.fixtures.getEach('homeTeam');
-    let awayTeams = this.fixtures.getEach('awayTeam');
+    let eligibleFixtures = this.fixtures.filter(
+      (fixture) => !fixture.isPostponed
+    );
+    let homeTeams = eligibleFixtures.getEach('homeTeam');
+    let awayTeams = eligibleFixtures.getEach('awayTeam');
     return homeTeams.concat(awayTeams);
   }
 }

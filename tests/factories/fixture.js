@@ -17,5 +17,9 @@ FactoryGuy.define('fixture', {
       fixture.awayScore = 1;
       fixture.status = 'C';
     },
+
+    postponed: (fixture) => {
+      fixture.status = 'P';
+    },
   },
 });
