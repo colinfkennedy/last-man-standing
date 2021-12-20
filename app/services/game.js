@@ -125,4 +125,6 @@ export default class GameService extends Service {
 
     return alphabetSelection;
   }
+
+  selectionNotEligible(selection) {}
 }
