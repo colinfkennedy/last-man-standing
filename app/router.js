@@ -11,6 +11,7 @@ Router.map(function () {
     this.route('fixtures');
     this.route('games');
     this.route('babbers');
+    this.route('selections');
   });
   this.route('leaderboard');
   this.route('login');

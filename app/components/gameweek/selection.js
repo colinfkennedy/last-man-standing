@@ -26,12 +26,19 @@ export default class GameweekSelectionComponent extends Component {
 
   @task
   *persistSelection(selection) {
+    if (this.args.adminMode) {
+      selection.isAlphabetPick = true;
+    }
     yield selection.save();
   }
 
   @cached
-  get gameweekStarted() {
-    return new Date() >= this.args.selection.get('gameweek.start');
+  get selectionDisabled() {
+    if (this.args.adminMode) {
+      return false;
+    } else {
+      return new Date() >= this.args.selection.get('gameweek.start');
+    }
   }
 
   @cached
@@ -41,7 +48,10 @@ export default class GameweekSelectionComponent extends Component {
     return this.game.clubsForGameweek(gameweek, babber);
   }
 
-  get isCurrentUser() {
-    return this.game.currentUser.id === this.args.selection.get('babber.id');
+  get canEditSelection() {
+    return (
+      this.game.currentUser.id === this.args.selection.get('babber.id') ||
+      this.args.adminMode
+    );
   }
 }

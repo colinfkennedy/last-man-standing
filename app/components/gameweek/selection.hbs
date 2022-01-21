@@ -1,14 +1,23 @@
 <div
-  class="flex flex-col flex-grow rounded-xl  w-full shadow lg:max-w-2xl border p-4 space-y-4 {{if @selection.isAlphabetPick 'bg-gray-300'}} {{if @selection.lost 'bg-red-100' 'bg-gray-50'}}"
+  class='flex flex-col flex-grow rounded-xl w-full shadow lg:max-w-2xl border p-4 space-y-4
+    {{if @selection.isAlphabetPick 'bg-gray-300'}}
+    {{if @selection.lost 'bg-red-100' 'bg-gray-50'}}'
 >
-  <div class="flex flex-row items-center">
-    <Babber @babber={{@selection.babber}}/>
+  <div class='flex flex-row items-center'>
+    <Babber @babber={{@selection.babber}} />
     {{#if @selection.club}}
-      <Club @club={{@selection.club}} class="text-right flex-row-reverse -mr-2" />
+      <Club
+        @club={{@selection.club}}
+        class='text-right flex-row-reverse -mr-2'
+      />
     {{/if}}
   </div>
-  {{#if this.isCurrentUser}}
-    <select {{on "change" this.saveSelection}} class="text-xs lg:text-base form-select rounded-md border disabled:opacity-5" disabled={{this.gameweekStarted}}>
+  {{#if this.canEditSelection}}
+    <select
+      {{on 'change' this.saveSelection}}
+      class='text-xs lg:text-base form-select rounded-md border disabled:opacity-5'
+      disabled={{this.selectionDisabled}}
+    >
       {{#each this.eligibleTeams as |team|}}
         <option
           value={{team.id}}
@@ -20,7 +29,7 @@
     </select>
   {{/if}}
   {{#if @selection.isError}}
-    <div class="text-sm text-red-500">
+    <div class='text-sm text-red-500'>
       Something went wrong saving your selection. Please try again.
     </div>
   {{/if}}
