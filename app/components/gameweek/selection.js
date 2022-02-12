@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
 import { cached } from '@glimmer/tracking';
-
+import Model from '@ember-data/model';
 export default class GameweekSelectionComponent extends Component {
   @service game;
   @service store;
@@ -12,15 +12,15 @@ export default class GameweekSelectionComponent extends Component {
   saveSelection(event) {
     let club = this.store.peekRecord('club', event.target.value);
     let currentSelection = this.args.selection;
-    if (currentSelection.isAlphabetPick) {
+    if (currentSelection instanceof Model) {
+      currentSelection.club = club;
+      this.persistSelection.perform(currentSelection);
+    } else {
       let newSelection = this.store.createRecord('selection');
       newSelection.babber = currentSelection.babber;
       newSelection.club = club;
       newSelection.gameweek = currentSelection.gameweek;
       this.persistSelection.perform(newSelection);
-    } else {
-      currentSelection.club = club;
-      this.persistSelection.perform(currentSelection);
     }
   }
 
