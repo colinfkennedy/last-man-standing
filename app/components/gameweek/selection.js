@@ -2,15 +2,26 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency';
-import { cached } from '@glimmer/tracking';
+import { cached, tracked } from '@glimmer/tracking';
 import Model from '@ember-data/model';
 export default class GameweekSelectionComponent extends Component {
   @service game;
   @service store;
+  @tracked confirmMessage;
 
   @action
-  saveSelection(event) {
+  saveSelectionOnSelect(event) {
     let club = this.store.peekRecord('club', event.target.value);
+    this.saveSelection(club);
+  }
+
+  @action
+  saveCurrentSelection() {
+    console.log('Saving current selection');
+    this.saveSelection(this.args.selection.club);
+  }
+
+  saveSelection(club) {
     let currentSelection = this.args.selection;
     if (currentSelection instanceof Model) {
       currentSelection.club = club;
@@ -29,7 +40,10 @@ export default class GameweekSelectionComponent extends Component {
     if (this.args.adminMode) {
       selection.isAlphabetPick = true;
     }
-    yield selection.save();
+    let savedSelection = yield selection.save();
+    if (this.args.adminMode && !savedSelection.isError) {
+      this.confirmMessage = 'Selection saved';
+    }
   }
 
   @cached
