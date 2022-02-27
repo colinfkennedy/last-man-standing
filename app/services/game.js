@@ -102,10 +102,12 @@ export default class GameService extends Service {
       .filter((club) => !alreadySelected.includes(club.get('name')))
       .sortBy('name');
 
+    let uniqueClubsForGameweek = clubsForGameweek.uniqBy('name');
+
     let previousAlphabetPicks =
       relevantGameweeks.length - alreadySelected.length;
 
-    return clubsForGameweek.slice(previousAlphabetPicks);
+    return uniqueClubsForGameweek.slice(previousAlphabetPicks);
   }
 
   defaultSelection(gameweek, babber) {
