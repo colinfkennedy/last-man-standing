@@ -1,3 +1,4 @@
+/*global Parse*/
 import ENV from 'last-man-standing/config/environment';
 
 export function initialize(/* application */) {

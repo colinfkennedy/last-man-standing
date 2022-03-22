@@ -1,3 +1,4 @@
+/*global Parse*/
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { cached, tracked } from '@glimmer/tracking';
