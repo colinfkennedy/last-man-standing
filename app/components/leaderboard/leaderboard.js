@@ -40,6 +40,11 @@ export default class LeaderboardLeaderboardComponent extends Component {
         let drawnWinnings = drawnGames.map((game) => 40 / game.winners.length);
         let lost = played - won - drawnGames.length;
         let total = won * 40 + drawnWinnings - played * 5;
+        let gameweeksPlayed = this.store
+          .peekAll('selection')
+          .filter(
+            (selection) => selection.get('babber.id') === babber.get('id')
+          ).length;
         let babberStanding = {
           played,
           won,
@@ -47,6 +52,7 @@ export default class LeaderboardLeaderboardComponent extends Component {
           lost,
           total: total,
           babber: babber,
+          gameweeksPlayed,
         };
         return babberStanding;
       })
