@@ -1,0 +1,15 @@
+<div
+  class="flex flex-col flex-grow rounded-xl w-full shadow lg:max-w-2xl border p-4 space-y-4 bg-white"
+>
+  <div class="flex flex-row items-center">
+    <div class="flex-grow font-bold text-center">{{@title}}</div>
+  </div>
+  {{#each @clubCounts as |clubCount|}}  
+    <div class="flex flex-row items-center rounded-xl w-full shadow lg:max-w-2xl border p-4 bg-gray-50">
+      <Club
+        @club={{clubCount.club}}
+      />
+      <div class="flex-grow text-right mr-2">{{clubCount.count}}</div>
+    </div>
+  {{/each}}
+</div>

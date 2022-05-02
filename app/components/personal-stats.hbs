@@ -1,0 +1,49 @@
+<div class="flex flex-col items-center space-y-8 p-4">
+  <div class="text-center text-xl lg:text-2xl font-thin">
+    PERSONAL STATS
+  </div>
+
+  <div
+    class="flex flex-col flex-grow rounded-xl w-full shadow lg:max-w-2xl border p-4 space-y-4 bg-white"
+  >
+    <div class="flex flex-row items-center rounded-xl w-full shadow lg:max-w-2xl border p-4 bg-gray-50">
+      <div>Gameweeks played</div>
+      <div class="flex-grow text-right mr-2">{{this.gameweeksPlayed}}</div>
+    </div>
+
+    <div class="flex flex-row items-center rounded-xl w-full shadow lg:max-w-2xl border p-4 bg-gray-50">
+      <div>Games won</div>
+      <div class="flex-grow text-right mr-2">{{this.gamesWon}}</div>
+    </div>
+
+    <div class="flex flex-row items-center rounded-xl w-full shadow lg:max-w-2xl border p-4 bg-gray-50">
+      <div>Games drawn</div>
+      <div class="flex-grow text-right mr-2">{{this.gamesDrawn}}</div>
+    </div>
+
+    <div class="flex flex-row items-center rounded-xl w-full shadow lg:max-w-2xl border p-4 bg-gray-50">
+      <div>Games lost</div>
+      <div class="flex-grow text-right mr-2">{{this.gamesLost}}</div>
+    </div>
+
+    <div class="flex flex-row items-center rounded-xl w-full shadow lg:max-w-2xl border p-4 bg-gray-50">
+      <div>Balance</div>
+      <div class="flex-grow text-right mr-2">€{{this.totalWinnings}}</div>
+    </div>
+  </div>
+
+  <PersonalStats::CountTable
+    @title="Most Wins by Club"
+    @clubCounts={{this.topFiveClubs}}
+  />
+
+  <PersonalStats::CountTable
+    @title="Most Losses by Club"
+    @clubCounts={{this.bottomFiveClubs}}
+  />
+
+  <div class='flex flex-col pb-2'>
+    <LinkToButton @route='index' @text='Back to gameweek' class='pt-4' />
+  </div>
+</div>
+
