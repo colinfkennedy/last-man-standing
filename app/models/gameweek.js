@@ -31,7 +31,8 @@ export default class GameweekModel extends Model {
 
   @cached
   get endOfSeasonShare() {
-    return !this.winner && this.label === '38';
+    let now = new Date();
+    return !this.winner && this.label === '38' && now > this.twoHoursAfterLastFixture;
   }
 
   @cached
@@ -94,6 +95,12 @@ export default class GameweekModel extends Model {
   get end() {
     return this.fixtures.map((fixture) => fixture.kickoff).sort((a, b) => a - b)
       .lastObject;
+  }
+
+  @cached
+  get twoHoursAfterLastFixture() {
+    let twoHoursAfterLastFixture = new Date(this.end.getTime());
+    return twoHoursAfterLastFixture.setHours(twoHoursAfterLastFixture.getHours() + 2);
   }
 
   @cached
