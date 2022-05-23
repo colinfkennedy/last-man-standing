@@ -18,12 +18,18 @@ export default class GameService extends Service {
   get currentGameweek() {
     let now = new Date();
 
-    return this.store
+    let sortedGameweeks = this.store
       .peekAll('gameweek')
-      .sortBy('start')
-      .find((gameweek) => {
-        return now.setHours(1) < gameweek.end;
-      });
+      .sortBy('start');
+
+    let currentGameweek = sortedGameweeks.find((gameweek) => {
+      return now.setHours(1) < gameweek.end;
+    });
+    
+    if(!currentGameweek) {
+      currentGameweek = sortedGameweeks.lastObject;        
+    }
+    return currentGameweek;
   }
 
   gameForGameweek(gameweek) {
