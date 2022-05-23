@@ -37,7 +37,7 @@ export default class LeaderboardLeaderboardComponent extends Component {
             return false;
           }
         });
-        let drawnWinnings = drawnGames.map((game) => 40 / game.winners.length);
+        let drawnWinnings = drawnGames.map((game) => 40 / game.winners.length).reduce((a, b) => a + b, 0);
         let lost = played - won - drawnGames.length;
         let total = won * 40 + drawnWinnings - played * 5;
         let gameweeksPlayed = this.store

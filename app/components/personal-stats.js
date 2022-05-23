@@ -96,7 +96,7 @@ export default class PersonalStatsComponent extends Component {
   }
 
   get totalWinnings() {
-    let drawnWinnings = this.drawnGames.map((game) => 40 / game.winners.length);
+    let drawnWinnings = this.drawnGames.map((game) => 40 / game.winners.length).reduce((a, b) => a + b, 0);
     return (this.gamesWon * 40) + drawnWinnings - (this.gamesPlayed * 5);
   }
 }
