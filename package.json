@@ -86,11 +86,11 @@
     "edition": "octane"
   },
   "dependencies": {
-    "autoprefixer": "^10.2.6",
+    "autoprefixer": "^10.4.7",
     "ember-cli": "^3.27.0",
     "firebase": "^8.9.0",
     "parse": "^3.2.0",
-    "postcss": "^8.3.1",
-    "postcss-import": "^14.0.2"
+    "postcss": "^8.4.14",
+    "postcss-import": "^14.1.0"
   }
 }
