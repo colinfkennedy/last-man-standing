@@ -17,7 +17,7 @@ function retreiveJsonPromise(response) {
 function modifyFixtureQueryParams(request) {
   if (request.url().startsWith(fixturesApiUrl)) {
     console.log(`Intercepted fixture url: ${request.url()}`);
-    let url = `${fixturesApiUrl}?comps=1&compSeasons=418&teams=1,2,130,131,43,4,6,7,9,26,10,11,12,23,14,20,21,33,25,38&page=0&pageSize=500&sort=asc&statuses=C,U,L&altIds=true`;
+    let url = `${fixturesApiUrl}?comps=1&compSeasons=489&teams=127,1,2,130,131,4,6,7,34,9,26,10,11,12,23,15,20,21,25,38&page=0&pageSize=500&sort=asc&statuses=C,U,L&altIds=true`;
     request.continue({ url });
   } else {
     request.continue();
