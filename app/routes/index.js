@@ -2,9 +2,21 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import RSVP from 'rsvp';
 import { action } from '@ember/object';
-import firebase from 'firebase/app';
-import 'firebase/storage';
 import fetch from 'fetch';
+import ENV from 'last-man-standing/config/environment';
+import { initializeApp } from "firebase/app"
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
+const firebaseConfig = {
+  apiKey: ENV.APP.firebaseApiKey,
+  authDomain: `${ENV.APP.firebaseProjectId}.firebaseapp.com`,
+  databaseURL: `https://${ENV.APP.firebaseProjectId}.firebaseio.com`,
+  projectId: ENV.APP.firebaseProjectId,
+  storageBucket: `${ENV.APP.firebaseProjectId}.appspot.com`,
+  messagingSenderId: '37171653739',
+  appId: '1:37171653739:web:9ecce4f68da6e9239a952e',
+  measurementId: 'G-VPK3VBNYK1',
+};
 
 const fixturesFile = 'gs://babb-last-man-standing-fixtures/fixtures.json';
 
@@ -42,12 +54,12 @@ export default class IndexRoute extends Route {
   }
 
   async getRawFixtures() {
-    // Create a reference with an initial file path and name
-    let storage = firebase.storage();
+    let firebaseApp = initializeApp(firebaseConfig);
+    let storage = getStorage(firebaseApp);
 
-    let fixturesFileReference = storage.refFromURL(fixturesFile);
+    let fixturesFileReference = ref(storage, fixturesFile);
 
-    let fixturesDownloadUrl = await fixturesFileReference.getDownloadURL();
+    let fixturesDownloadUrl = await getDownloadURL(fixturesFileReference);
 
     return fetch(fixturesDownloadUrl)
       .then(function (response) {
