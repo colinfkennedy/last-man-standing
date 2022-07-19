@@ -1,4 +1,11 @@
 <div class="flex flex-col items-center space-y-4 p-4">
+  <div class="flex flex-row w-full mt-4">
+    <select name="leaderboard-selector" class="text-xs lg:text-base form-select min-w-max rounded-md border border-premPurple" {{on "change" this.setLeaderboard}}>
+      {{#each this.leaderboards as |leaderboard|}}
+        <option value={{leaderboard}} selected={{if (eq leaderboard this.selectedLeaderboard) 'selected'}}>{{leaderboard}}</option>
+      {{/each}}
+    </select>
+  </div>
   <div class="text-center text-xl lg:text-2xl font-thin">
     LEADERBOARD
   </div>
@@ -16,8 +23,8 @@
       </tr>
       </thead>
       <tbody>
-      {{#each this.orderedTotals as |standing index|}}
-        <Leaderboard::Row @standing={{standing}} @index={{index}} @totalRows={{this.orderedTotals.length}}/>
+      {{#each this.leaderboardRows as |standing index|}}
+        <Leaderboard::Row @standing={{standing}} @index={{index}} @totalRows={{this.leaderboardRows.length}}/>
       {{/each}}
       </tbody>
     </table>
